@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include facility_management *.css
+recursive-include facility_management *.csv
+recursive-include facility_management *.html
+recursive-include facility_management *.ico
+recursive-include facility_management *.js
+recursive-include facility_management *.json
+recursive-include facility_management *.md
+recursive-include facility_management *.png
+recursive-include facility_management *.py
+recursive-include facility_management *.svg
+recursive-include facility_management *.txt
+recursive-exclude facility_management *.pyc
