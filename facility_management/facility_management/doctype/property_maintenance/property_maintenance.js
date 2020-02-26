@@ -21,4 +21,11 @@ function _set_custom_buttons(frm) {
         await frm.call('log_history', { status, description });
         frm.save();
     });
+    frm.add_custom_button(__('Expense Claim'), function() {
+        frappe.route_options = {
+            'pm_property_maintenance': frm.doc.name,
+            'employee': frm.doc.assigned_to,
+        };
+        frappe.new_doc('Expense Claim');
+    });
 }
