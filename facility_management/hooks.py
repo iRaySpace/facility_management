@@ -11,6 +11,20 @@ app_color = "grey"
 app_email = "info@9t9it.com"
 app_license = "MIT"
 
+fixtures = [
+    {
+        "doctype": "Custom Field",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                    "Expense Claim-pm_property_maintenance"
+                ]
+            ]
+        ]
+    }
+]
 # Includes in <head>
 # ------------------
 
