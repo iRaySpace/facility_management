@@ -9,6 +9,9 @@ frappe.ui.form.on('Property Maintenance', {
 });
 
 function _set_custom_buttons(frm) {
+    if (frm.doc.__islocal) {
+        return;
+    }
     frm.add_custom_button(__('Close'), async function() {
         await frm.call('close_issue');
         frm.save();
