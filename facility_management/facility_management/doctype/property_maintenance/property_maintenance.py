@@ -23,3 +23,19 @@ class PropertyMaintenance(Document):
 			'status': status,
 			'description': description,
 		})
+
+	def validate(self):
+		if self.status == 'Closed':
+			_send_email(self)
+
+
+def _send_email(property_maintenance):
+	email = frappe.get_value('Tenant', property_maintenance.tenant, 'email')
+	try:
+		frappe.sendmail(
+			recipients=[email],
+			subject=f'Issue {property_maintenance.name} has been closed',
+			message=f'Description: {property_maintenance.issue_description}'
+		)
+	except:
+		frappe.msgprint('Unable to send email')
