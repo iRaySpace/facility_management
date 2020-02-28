@@ -17,7 +17,7 @@ function _set_custom_buttons(frm) {
     }
     frm.add_custom_button(__('Close'), async function() {
         await frm.call('close_issue');
-        frm.save();
+        frm.savesubmit();
     });
     frm.add_custom_button(__('Log'), async function() {
         const { status, description } = await prompt_log();
