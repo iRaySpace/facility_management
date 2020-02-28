@@ -19,7 +19,9 @@ fixtures = [
                 "name",
                 "in",
                 [
-                    "Expense Claim-pm_property_maintenance"
+                    "Expense Claim-pm_property_maintenance",
+                    "Material Request-pm_property_maintenance",
+                    "Asset Repair-pm_property_maintenance"
                 ]
             ]
         ]

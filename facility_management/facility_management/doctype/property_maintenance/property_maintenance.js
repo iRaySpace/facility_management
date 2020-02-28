@@ -21,11 +21,27 @@ function _set_custom_buttons(frm) {
         await frm.call('log_history', { status, description });
         frm.save();
     });
+
+    // Add
     frm.add_custom_button(__('Expense Claim'), function() {
         frappe.route_options = {
             'pm_property_maintenance': frm.doc.name,
             'employee': frm.doc.assigned_to,
         };
         frappe.new_doc('Expense Claim');
-    });
+    }, __('Add'));
+    frm.add_custom_button(__('Material Request'), function() {
+        frappe.route_options = {
+            'pm_property_maintenance': frm.doc.name,
+            'requested_by': frm.doc.assigned_to,
+        };
+        frappe.new_doc('Material Request');
+    }, __('Add'));
+    frm.add_custom_button(__('Asset Repair'), function() {
+        frappe.route_options = {
+            'pm_property_maintenance': frm.doc.name,
+            'assign_to': frm.doc.created_by,
+        };
+        frappe.new_doc('Asset Repair');
+    }, __('Add'));
 }
