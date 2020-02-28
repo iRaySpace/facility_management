@@ -5,6 +5,9 @@
 frappe.ui.form.on('Property Maintenance', {
 	refresh: function(frm) {
         _set_custom_buttons(frm);
+	},
+	tenant: function(frm) {
+        _set_tenant_name(frm);
 	}
 });
 
@@ -44,4 +47,9 @@ function _set_custom_buttons(frm) {
         };
         frappe.new_doc('Asset Repair');
     }, __('Add'));
+}
+
+async function _set_tenant_name(frm) {
+    const tenant = await frappe.db.get_doc('Tenant', frm.doc.tenant);
+    frm.set_value('tenant_name', `${tenant.first_name} ${tenant.last_name}`);
 }
