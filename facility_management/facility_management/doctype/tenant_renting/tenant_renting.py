@@ -5,6 +5,9 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
+from frappe.utils.data import add_to_date
+
 
 class TenantRenting(Document):
-	pass
+	def validate(self):
+		self.auto_invoice_date = add_to_date(self.contract_start_date, months=3)
