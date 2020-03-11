@@ -19,7 +19,9 @@ fixtures = [
                 "name",
                 "in",
                 [
-                    "Expense Claim-pm_property_maintenance"
+                    "Expense Claim-pm_property_maintenance",
+                    "Material Request-pm_property_maintenance",
+                    "Asset Repair-pm_property_maintenance"
                 ]
             ]
         ]
@@ -104,23 +106,11 @@ fixtures = [
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"facility_management.tasks.all"
-# 	],
-# 	"daily": [
-# 		"facility_management.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"facility_management.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"facility_management.tasks.weekly"
-# 	]
-# 	"monthly": [
-# 		"facility_management.tasks.monthly"
-# 	]
-# }
+scheduler_events = {
+    "daily": [
+        "facility_management.events.create_invoice.execute"
+    ]
+}
 
 # Testing
 # -------
