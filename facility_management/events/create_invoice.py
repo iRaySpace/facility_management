@@ -7,15 +7,21 @@ def execute():
     rental_item = frappe.db.get_single_value('Facility Management Settings', 'rental_item')
 
     for tenant_due in tenant_dues:
-        customer = frappe.db.get_value('Tenant', tenant_due.get('tenant'), 'customer')
+        tenant = tenant_due.get('tenant')
+        description = tenant_due.get('description')
+        rental_amount = tenant_due.get('rental_amount')
+        advance_paid_amount = tenant_due.get('advance_paid_amount')
+
+        amount = advance_paid_amount if description == 'Advance Payment' else rental_amount
+
         invoice = frappe.new_doc('Sales Invoice')
         invoice.update({
-            'customer': customer,
+            'customer': frappe.db.get_value('Tenant', tenant, 'customer'),
             'due_date': tenant_due.get('invoice_date')
         })
         invoice.append('items', {
             'item_code': rental_item,
-            'rate': tenant_due.get('rental_amount'),
+            'rate': amount,
             'qty': 1.0,
         })
         invoice.set_missing_values()
