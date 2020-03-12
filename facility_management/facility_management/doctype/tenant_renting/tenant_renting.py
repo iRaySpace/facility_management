@@ -10,7 +10,6 @@ from frappe.utils.data import add_to_date, getdate
 
 class TenantRenting(Document):
 	def validate(self):
-		self.auto_invoice_date = add_to_date(self.contract_start_date, months=3)
 		if not self.items:
 			_generate_advance_payment(self)
 			_generate_items(self)
@@ -36,7 +35,7 @@ def _generate_items(renting):
 	:return:
 	"""
 	end_date = getdate(renting.contract_end_date)
-	next_date = _get_next_date(getdate(renting.auto_invoice_date), renting.rental_frequency)
+	next_date = _get_next_date(getdate(renting.start_invoice_date), renting.rental_frequency)
 	while next_date < end_date:
 		renting.append('items', {
 			'invoice_date': next_date,
