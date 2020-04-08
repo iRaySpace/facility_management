@@ -690,7 +690,7 @@
  "issingle": 0,
  "istable": 0,
  "max_attachments": 0,
- "modified": "2020-03-11 19:59:14.718127",
+ "modified": "2020-04-08 16:21:49.852733",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Tenant",
@@ -723,6 +723,7 @@
  "show_name_in_global_search": 0,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "tenant_name",
  "track_changes": 1,
  "track_seen": 0,
  "track_views": 0
