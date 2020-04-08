@@ -356,7 +356,7 @@
  "issingle": 0,
  "istable": 0,
  "max_attachments": 0,
- "modified": "2020-02-17 20:15:12.118014",
+ "modified": "2020-04-08 16:03:30.817551",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Real Estate Property",
@@ -389,6 +389,7 @@
  "show_name_in_global_search": 0,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "property_name",
  "track_changes": 1,
  "track_seen": 0,
  "track_views": 0
