@@ -20,8 +20,8 @@ function _set_custom_buttons(frm) {
         frm.savesubmit();
     });
     frm.add_custom_button(__('Log'), async function() {
-        const { status, description } = await prompt_log();
-        await frm.call('log_history', { status, description });
+        const { datetime, status, description } = await prompt_log();
+        await frm.call('log_history', { datetime, status, description });
         frm.save();
     });
 
