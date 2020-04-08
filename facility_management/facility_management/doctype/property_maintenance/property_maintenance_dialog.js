@@ -4,6 +4,11 @@ function prompt_log() {
             title: 'Log History',
             fields: [
                 {
+                    fieldname: 'datetime',
+                    fieldtype: 'Datetime',
+                    label: __('Activity Datetime'),
+                },
+                {
                     fieldname: 'status',
                     fieldtype: 'Select',
                     label: __('Status'),

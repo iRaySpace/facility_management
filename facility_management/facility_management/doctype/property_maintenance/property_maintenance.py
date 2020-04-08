@@ -18,10 +18,10 @@ class PropertyMaintenance(Document):
 		})
 		_send_email(self, 'Closed', 'Check Issue')
 
-	def log_history(self, status, description):
+	def log_history(self, datetime, status, description):
 		self.status = status
 		self.append('items', {
-			'activity_datetime': now(),
+			'activity_datetime': datetime,
 			'status': status,
 			'description': description,
 		})
