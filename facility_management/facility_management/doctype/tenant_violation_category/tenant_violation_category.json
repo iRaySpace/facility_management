@@ -91,7 +91,7 @@
  "issingle": 0,
  "istable": 0,
  "max_attachments": 0,
- "modified": "2020-04-13 14:32:22.034931",
+ "modified": "2020-04-13 15:02:17.130387",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Tenant Violation Category",
@@ -124,6 +124,7 @@
  "show_name_in_global_search": 0,
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "category_name",
  "track_changes": 1,
  "track_seen": 0,
  "track_views": 0
