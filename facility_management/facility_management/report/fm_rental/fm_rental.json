@@ -1,0 +1,24 @@
+{
+ "add_total_row": 0,
+ "creation": "2020-04-13 17:38:10.931273",
+ "disable_prepared_report": 0,
+ "disabled": 0,
+ "docstatus": 0,
+ "doctype": "Report",
+ "idx": 0,
+ "is_standard": "Yes",
+ "modified": "2020-04-13 17:38:10.931273",
+ "modified_by": "Administrator",
+ "module": "Facility Management",
+ "name": "FM Rental",
+ "owner": "Administrator",
+ "prepared_report": 0,
+ "ref_doctype": "Tenant Renting",
+ "report_name": "FM Rental",
+ "report_type": "Script Report",
+ "roles": [
+  {
+   "role": "System Manager"
+  }
+ ]
+}
