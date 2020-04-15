@@ -6,9 +6,14 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _
 from frappe.model.document import Document
+from erpnext.accounts.party import get_dashboard_info
 
 
 class Tenant(Document):
+	def onload(self):
+		info = get_dashboard_info('Customer', self.customer)
+		self.set_onload('dashboard_info', info)
+
 	def after_insert(self):
 		_create_customer(self)
 
