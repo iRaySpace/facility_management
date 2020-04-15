@@ -6,8 +6,17 @@
 frappe.ui.form.on('FM Dashboard', {
 	refresh: function(frm) {
 		_make_rental_listing_graph('div[title="rental_listing_html"]');
+		_make_outstanding_balances(frm);
+	},
+	real_estate_property: function(frm) {
+		_make_outstanding_balances(frm);
 	}
 });
+
+
+function _make_outstanding_balances(frm) {
+	frm.call('make_outstanding_balances');
+}
 
 
 async function _make_rental_listing_graph(parent) {
