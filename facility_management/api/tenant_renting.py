@@ -19,6 +19,12 @@ def get_rental_listing():
     }
 
 
+@frappe.whitelist()
+def get_customer(tenant_renting):
+    tenant = frappe.db.get_value('Tenant Renting', tenant_renting, 'tenant')
+    return frappe.db.get_value('Tenant', tenant, 'customer')
+
+
 def _get_rental_properties():
     return frappe.db.sql("""
 		SELECT
