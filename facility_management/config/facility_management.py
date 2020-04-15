@@ -45,6 +45,10 @@ def get_data():
                 {
                     'type': 'doctype',
                     'name': 'Tenant Renting'
+                },
+                {
+                    'type': 'doctype',
+                    'name': 'FM Dashboard'
                 }
             ]
         },

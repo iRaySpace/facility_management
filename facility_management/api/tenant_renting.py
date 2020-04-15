@@ -14,8 +14,8 @@ def get_rental_listing():
     occupied = list(map(data_occupied, _get_rental_properties()))
 
     return {
-        'Vacant': len(list(filter(lambda x: x['occupied'], occupied))),
-        'Occupied': len(list(filter(lambda x: not x['occupied'], occupied)))
+        'Vacant': len(list(filter(lambda x: not x['occupied'], occupied))),
+        'Occupied': len(list(filter(lambda x: x['occupied'], occupied)))
     }
 
 
