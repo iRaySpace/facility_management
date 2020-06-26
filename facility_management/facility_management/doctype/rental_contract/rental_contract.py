@@ -5,10 +5,20 @@
 from __future__ import unicode_literals
 import frappe
 from frappe.model.document import Document
-from frappe.utils.data import add_to_date, getdate
+from frappe.utils.data import add_to_date, getdate, now_datetime
 
 
-class TenantRenting(Document):
+class RentalContract(Document):
+	def autoname(self):
+		today = now_datetime()
+		last_name = frappe.db.get_value('Tenant Master', self.tenant, 'last_name')
+		self.name = '-'.join([
+			last_name,
+			self.property,
+			today.strftime('%m'),
+			today.strftime('%y')
+		])
+
 	def validate(self):
 		if not self.items:
 			_generate_advance_payment(self)
