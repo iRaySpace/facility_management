@@ -40,11 +40,11 @@ def get_data():
                 },
                 {
                     'type': 'doctype',
-                    'name': 'Tenant'
+                    'name': 'Tenant Master'
                 },
                 {
                     'type': 'doctype',
-                    'name': 'Tenant Renting'
+                    'name': 'Rental Contract'
                 },
                 {
                     'type': 'doctype',
