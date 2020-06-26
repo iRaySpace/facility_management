@@ -32,10 +32,6 @@ def get_data():
                 },
                 {
                     'type': 'doctype',
-                    'name': 'Property Rental Type'
-                },
-                {
-                    'type': 'doctype',
                     'name': 'Real Estate Property'
                 },
                 {
@@ -44,7 +40,7 @@ def get_data():
                 },
                 {
                     'type': 'doctype',
-                    'name': 'Rental Contract'
+                    'name': 'Tenant Violation'
                 },
                 {
                     'type': 'doctype',
