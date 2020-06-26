@@ -1,7 +1,7 @@
 // Copyright (c) 2020, 9T9IT and contributors
 // For license information, please see license.txt
 
-frappe.ui.form.on('Tenant Renting', {
+frappe.ui.form.on('Rental Contract', {
 	contract_start_date: function(frm) {
 	    _set_start_invoice_date(frm);
 	}
