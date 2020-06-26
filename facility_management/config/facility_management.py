@@ -14,23 +14,7 @@ def get_data():
                     'type': 'doctype',
                     'name': 'Property Checkup'
                 },
-                {
-                    'type': 'doctype',
-                    'name': 'Property Facility'
-                },
-                {
-                    'type': 'doctype',
-                    'name': 'Property History'
-                },
-                {
-                    'type': 'doctype',
-                    'name': 'Property Inventory'
-                },
-                {
-                    'type': 'doctype',
-                    'name': 'Property Maintenance'
-                },
-                {
+                                {
                     'type': 'doctype',
                     'name': 'Real Estate Property'
                 },
@@ -70,7 +54,19 @@ def get_data():
             'items': [
                 {
                     'type': 'doctype',
-                    'name': 'Facility Management Settings'
+                    'name': 'Property Facility'
+                },
+                {
+                    'type': 'doctype',
+                    'name': 'Property History'
+                },
+                {
+                    'type': 'doctype',
+                    'name': 'Property Inventory'
+                },
+                {
+                    'type': 'doctype',
+                    'name': 'Property Maintenance'
                 }
             ]
         }
