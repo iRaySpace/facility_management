@@ -9,7 +9,7 @@ from frappe.model.document import Document
 from erpnext.accounts.party import get_dashboard_info
 
 
-class Tenant(Document):
+class TenantMaster(Document):
 	def onload(self):
 		info = get_dashboard_info('Customer', self.customer)
 		self.set_onload('dashboard_info', info)
@@ -26,13 +26,13 @@ def _create_customer(tenant_master):
 
 	customer = frappe.get_doc({
 		'doctype': 'Customer',
-		'customer_name': tenant_master.tenant_master_name,
+		'customer_name': tenant_master.tenant_name,
 		'customer_group': customer_group,
 		'territory': territory,
 		'customer_type': 'Individual'
 	})
 	customer.insert(ignore_permissions=True)
 
-	frappe.db.set_value('Tenant', tenant_master.name, 'customer', customer.name)
+	frappe.db.set_value('Tenant Master', tenant_master.name, 'customer', customer.name)
 	frappe.msgprint(_('Customer {0} is created').format(customer.name), alert=True)
 
