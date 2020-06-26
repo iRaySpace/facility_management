@@ -40,6 +40,10 @@ def get_data():
                 },
                 {
                     'type': 'doctype',
+                    'name': 'Rental Contract'
+                },
+                {
+                    'type': 'doctype',
                     'name': 'Tenant Violation'
                 },
                 {
