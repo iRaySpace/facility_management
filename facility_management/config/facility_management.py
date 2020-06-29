@@ -14,37 +14,21 @@ def get_data():
                     'type': 'doctype',
                     'name': 'Property Checkup'
                 },
-                {
-                    'type': 'doctype',
-                    'name': 'Property Facility'
-                },
-                {
-                    'type': 'doctype',
-                    'name': 'Property History'
-                },
-                {
-                    'type': 'doctype',
-                    'name': 'Property Inventory'
-                },
-                {
-                    'type': 'doctype',
-                    'name': 'Property Maintenance'
-                },
-                {
-                    'type': 'doctype',
-                    'name': 'Property Rental Type'
-                },
-                {
+                                {
                     'type': 'doctype',
                     'name': 'Real Estate Property'
                 },
                 {
                     'type': 'doctype',
-                    'name': 'Tenant'
+                    'name': 'Tenant Master'
                 },
                 {
                     'type': 'doctype',
-                    'name': 'Tenant Renting'
+                    'name': 'Rental Contract'
+                },
+                {
+                    'type': 'doctype',
+                    'name': 'Tenant Violation'
                 },
                 {
                     'type': 'doctype',
@@ -70,7 +54,19 @@ def get_data():
             'items': [
                 {
                     'type': 'doctype',
-                    'name': 'Facility Management Settings'
+                    'name': 'Property Facility'
+                },
+                {
+                    'type': 'doctype',
+                    'name': 'Property History'
+                },
+                {
+                    'type': 'doctype',
+                    'name': 'Property Inventory'
+                },
+                {
+                    'type': 'doctype',
+                    'name': 'Property Maintenance'
                 }
             ]
         }

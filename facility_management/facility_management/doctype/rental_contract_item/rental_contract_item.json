@@ -160,7 +160,7 @@
  "modified": "2020-03-11 19:01:58.524511",
  "modified_by": "Administrator",
  "module": "Facility Management",
- "name": "Tenant Renting Item",
+ "name": "Rental Contract Item",
  "name_case": "",
  "owner": "Administrator",
  "permissions": [],
