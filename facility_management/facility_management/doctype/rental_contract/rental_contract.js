@@ -2,10 +2,23 @@
 // For license information, please see license.txt
 
 frappe.ui.form.on('Rental Contract', {
+	refresh: function(frm) {
+	    _add_payment_entry(frm);
+	},
 	contract_start_date: function(frm) {
 	    _set_start_invoice_date(frm);
 	}
 });
+
+
+function _add_payment_entry(frm) {
+    if (!frm.doc.__islocal) {
+        frm.add_custom_button(__('Add Payment Entry'), function() {
+            frappe.new_doc('Payment Entry');
+        });
+    }
+}
+
 
 function _set_start_invoice_date(frm) {
     if (frm.doc.__islocal) {
