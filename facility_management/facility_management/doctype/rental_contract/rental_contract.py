@@ -20,9 +20,15 @@ class RentalContract(Document):
 		])
 
 	def validate(self):
+		_validate_contract_dates(self)
 		if not self.items:
 			_generate_advance_payment(self)
 			_generate_items(self)
+
+
+def _validate_contract_dates(renting):
+	if renting.contract_start_date > renting.contract_end_date:
+		frappe.throw(_('Please set contract end date after the contract start date'))
 
 
 def _generate_advance_payment(renting):
