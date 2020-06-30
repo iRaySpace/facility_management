@@ -23,7 +23,7 @@ class RentalContract(Document):
 	def validate(self):
 		_validate_contract_dates(self)
 		if not self.items:
-			_generate_advance_payment(self)
+			# _generate_advance_payment(self)
 			_generate_items(self)
 
 
