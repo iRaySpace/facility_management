@@ -4,25 +4,42 @@
 
 from __future__ import unicode_literals
 import frappe
+from frappe import _
 from frappe.model.document import Document
-from frappe.utils.data import add_to_date, getdate, now_datetime
+from frappe.utils.data import add_to_date, getdate
 
 
 class RentalContract(Document):
 	def autoname(self):
-		today = now_datetime()
+		posting_date = getdate(self.posting_date)
 		last_name = frappe.db.get_value('Tenant Master', self.tenant, 'last_name')
 		self.name = '-'.join([
 			last_name,
 			self.property,
-			today.strftime('%m'),
-			today.strftime('%y')
+			posting_date.strftime('%m'),
+			posting_date.strftime('%y')
 		])
 
 	def validate(self):
+		_validate_contract_dates(self)
+		_validate_property(self)
 		if not self.items:
-			_generate_advance_payment(self)
+			# _generate_advance_payment(self)
 			_generate_items(self)
+
+	def on_submit(self):
+		_set_property_as_rented(self)
+
+
+def _validate_contract_dates(renting):
+	if renting.contract_start_date > renting.contract_end_date:
+		frappe.throw(_('Please set contract end date after the contract start date'))
+
+
+def _validate_property(renting):
+	rental_status = frappe.db.get_value('Property', renting.property, 'rental_status')
+	if rental_status == 'Rented':
+		frappe.throw(_('Please make choose unoccupied property.'))
 
 
 def _generate_advance_payment(renting):
@@ -53,6 +70,10 @@ def _generate_items(renting):
 			'is_invoice_created': 0
 		})
 		next_date = _get_next_date(next_date, renting.rental_frequency)
+
+
+def _set_property_as_rented(renting):
+	frappe.db.set_value('Property', renting.property, 'rental_status', 'Rented')
 
 
 def _get_next_date(date, frequency):

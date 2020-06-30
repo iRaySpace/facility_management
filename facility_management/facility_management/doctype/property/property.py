@@ -4,7 +4,15 @@
 
 from __future__ import unicode_literals
 import frappe
+from frappe import _
 from frappe.model.document import Document
 
+
 class Property(Document):
-	pass
+	def validate(self):
+		_validate_property_status(self)
+
+
+def _validate_property_status(property):
+	if property.property_status == 'Rental' and not property.rental_status:
+		frappe.throw(_('Please set Rental Status as Vacant or Rented'))
