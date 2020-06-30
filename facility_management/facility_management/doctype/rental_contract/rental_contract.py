@@ -26,6 +26,9 @@ class RentalContract(Document):
 			# _generate_advance_payment(self)
 			_generate_items(self)
 
+	def on_submit(self):
+		_set_property_as_rented(self)
+
 
 def _validate_contract_dates(renting):
 	if renting.contract_start_date > renting.contract_end_date:
@@ -60,6 +63,10 @@ def _generate_items(renting):
 			'is_invoice_created': 0
 		})
 		next_date = _get_next_date(next_date, renting.rental_frequency)
+
+
+def _set_property_as_rented(renting):
+	frappe.db.set_value('Property', renting.property, 'rental_status', 'Rented')
 
 
 def _get_next_date(date, frequency):
