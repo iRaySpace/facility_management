@@ -9,6 +9,14 @@ frappe.ui.form.on('EWA Billing', {
 });
 
 
+frappe.ui.form.on('EWA Billing Item', {
+    actual_ewa: function(frm, cdt, cdn) {
+        const child = locals[cdt][cdn];
+        frappe.model.set_value(cdt, cdn, 'excess_amount', child.actual_ewa - child.incl_val);
+    }
+});
+
+
 function _set_frm_props(frm) {
     _set_posting_date_time(frm);
     frm.set_df_property('company', 'hidden', 1);
