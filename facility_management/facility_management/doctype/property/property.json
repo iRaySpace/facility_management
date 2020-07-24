@@ -74,7 +74,7 @@
    "fieldtype": "Select",
    "in_list_view": 1,
    "label": "Property Type",
-   "options": "Apartment\nVilla\nShop"
+   "options": "Apartment\nVilla\nShop\nOffice"
   },
   {
    "fieldname": "property_status",
@@ -224,7 +224,7 @@
    "label": "Insurance End Date"
   }
  ],
- "modified": "2020-07-24 16:03:03.375229",
+ "modified": "2020-07-24 16:04:18.041239",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Property",
