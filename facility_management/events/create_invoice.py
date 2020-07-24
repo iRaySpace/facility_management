@@ -18,7 +18,8 @@ def execute():
         invoice.update({
             'customer': frappe.db.get_value('Tenant', tenant, 'customer'),
             'posting_date': tenant_due.get('invoice_date'),
-            'due_date': tenant_due.get('invoice_date')
+            'due_date': tenant_due.get('invoice_date'),
+            'debit_to': frappe.db.get_value('Company', invoice.company, 'default_receivable_account'),
         })
         invoice.append('items', {
             'item_code': rental_item,
