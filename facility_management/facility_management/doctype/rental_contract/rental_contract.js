@@ -12,7 +12,7 @@ frappe.ui.form.on('Rental Contract', {
 
 
 function _add_payment_entry(frm) {
-    if (!frm.doc.__islocal) {
+    if (frm.doc.docstatus !== 0) {
         frm.add_custom_button(__('Add Payment Entry'), function() {
             frappe.new_doc('Payment Entry');
         });
