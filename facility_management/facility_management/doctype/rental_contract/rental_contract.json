@@ -108,7 +108,7 @@
    "fieldname": "rental_frequency",
    "fieldtype": "Select",
    "label": "Rental Frequency",
-   "options": "Monthly\nYearly",
+   "options": "Monthly\nQuarterly\nHalf-yearly\nYearly",
    "reqd": 1
   },
   {
@@ -172,7 +172,7 @@
   }
  ],
  "is_submittable": 1,
- "modified": "2020-07-24 16:00:58.056215",
+ "modified": "2020-07-24 16:02:29.150290",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Rental Contract",

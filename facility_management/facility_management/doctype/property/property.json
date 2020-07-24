@@ -100,7 +100,7 @@
    "fieldname": "rental_frequency",
    "fieldtype": "Select",
    "label": "Rental Frequency",
-   "options": "Monthly\nYearly"
+   "options": "Monthly\nQuarterly\nHalf-yearly\nYearly"
   },
   {
    "fieldname": "cb_rental",
@@ -224,7 +224,7 @@
    "label": "Insurance End Date"
   }
  ],
- "modified": "2020-07-24 15:59:27.234183",
+ "modified": "2020-07-24 16:03:03.375229",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Property",
