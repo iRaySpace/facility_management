@@ -90,6 +90,7 @@
    "label": "Rental Details"
   },
   {
+   "default": "Vacant",
    "fieldname": "rental_status",
    "fieldtype": "Select",
    "in_list_view": 1,
@@ -224,7 +225,7 @@
    "label": "Insurance End Date"
   }
  ],
- "modified": "2020-07-24 16:04:18.041239",
+ "modified": "2020-07-24 16:16:42.250952",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Property",
