@@ -17,7 +17,9 @@ def execute():
         invoice = frappe.new_doc('Sales Invoice')
         invoice.update({
             'customer': frappe.db.get_value('Tenant', tenant, 'customer'),
-            'due_date': tenant_due.get('invoice_date')
+            'posting_date': tenant_due.get('invoice_date'),
+            'due_date': tenant_due.get('invoice_date'),
+            'debit_to': frappe.db.get_value('Company', invoice.company, 'default_receivable_account'),
         })
         invoice.append('items', {
             'item_code': rental_item,
@@ -31,8 +33,8 @@ def execute():
 
 
 def _set_invoice_created(name, invoice_ref):
-    frappe.db.set_value('Tenant Renting Item', name, 'is_invoice_created', 1)
-    frappe.db.set_value('Tenant Renting Item', name, 'invoice_ref', invoice_ref)
+    frappe.db.set_value('Rental Contract Item', name, 'is_invoice_created', 1)
+    frappe.db.set_value('Rental Contract Item', name, 'invoice_ref', invoice_ref)
 
 
 def _get_tenant_dues():
@@ -42,15 +44,15 @@ def _get_tenant_dues():
     """
     return frappe.db.sql("""
         SELECT
-            `tabTenant Renting Item`.name,
-            `tabTenant Renting Item`.invoice_date,
-            `tabTenant Renting Item`.description,
-            `tabTenant Renting`.rental_amount,
-            `tabTenant Renting`.advance_paid_amount,
-            `tabTenant Renting`.tenant
-        FROM `tabTenant Renting Item` INNER JOIN `tabTenant Renting`
-        ON `tabTenant Renting Item`.parent = `tabTenant Renting`.name
-        WHERE `tabTenant Renting`.docstatus = 1 
-        AND `tabTenant Renting Item`.is_invoice_created = 0
-        AND `tabTenant Renting Item`.invoice_date <= %s
+            `tabRental Contract Item`.name,
+            `tabRental Contract Item`.invoice_date,
+            `tabRental Contract Item`.description,
+            `tabRental Contract`.rental_amount,
+            `tabRental Contract`.advance_paid_amount,
+            `tabRental Contract`.tenant
+        FROM `tabRental Contract Item` INNER JOIN `tabRental Contract`
+        ON `tabRental Contract Item`.parent = `tabRental Contract`.name
+        WHERE `tabRental Contract`.docstatus = 1 
+        AND `tabRental Contract Item`.is_invoice_created = 0
+        AND `tabRental Contract Item`.invoice_date < %s
     """, today(), as_dict=True)
