@@ -7,6 +7,7 @@
   "tenant",
   "property",
   "rent_paid_by_employer",
+  "apply_invoices_now",
   "column_break_5",
   "posting_date",
   "property_group",
@@ -186,10 +187,16 @@
    "label": "Status",
    "options": "\nDraft\nActive\nExpired\nCancelled",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "apply_invoices_now",
+   "fieldtype": "Check",
+   "label": "Apply Invoices Now"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-07-27 11:59:40.485487",
+ "modified": "2020-07-27 12:44:22.339735",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Rental Contract",

@@ -2,8 +2,8 @@ import frappe
 from frappe.utils.data import today
 
 
-def execute():
-    tenant_dues = _get_tenant_dues()
+def execute(**kwargs):
+    tenant_dues = _get_tenant_dues(kwargs)
     rental_item = frappe.db.get_single_value('Facility Management Settings', 'rental_item')
 
     for tenant_due in tenant_dues:
@@ -37,22 +37,40 @@ def _set_invoice_created(name, invoice_ref):
     frappe.db.set_value('Rental Contract Item', name, 'invoice_ref', invoice_ref)
 
 
-def _get_tenant_dues():
+def _get_tenant_dues(filters):
     """
     Get due invoices during the day
     :return:
     """
-    return frappe.db.sql("""
-        SELECT
-            `tabRental Contract Item`.name,
-            `tabRental Contract Item`.invoice_date,
-            `tabRental Contract Item`.description,
-            `tabRental Contract`.rental_amount,
-            `tabRental Contract`.advance_paid_amount,
-            `tabRental Contract`.tenant
-        FROM `tabRental Contract Item` INNER JOIN `tabRental Contract`
-        ON `tabRental Contract Item`.parent = `tabRental Contract`.name
-        WHERE `tabRental Contract`.docstatus = 1 
-        AND `tabRental Contract Item`.is_invoice_created = 0
-        AND `tabRental Contract Item`.invoice_date < %s
-    """, today(), as_dict=True)
+    clauses = _get_clauses(filters)
+    return frappe.db.sql(
+        """
+            SELECT
+                rci.name,
+                rci.invoice_date,
+                rci.description,
+                rc.rental_amount,
+                rc.advance_paid_amount,
+                rc.tenant
+            FROM `tabRental Contract Item` rci
+            INNER JOIN `tabRental Contract` rc
+            ON rci.parent = rc.name
+            WHERE rc.docstatus = 1 
+            AND rci.is_invoice_created = 0
+            {clauses}
+        """.format(clauses='AND ' + clauses if clauses else ''),
+        {
+            **filters,
+            'now': today()
+        },
+        as_dict=True
+    )
+
+
+def _get_clauses(filters):
+    clauses = []
+    if filters.get('rental_contract'):
+        clauses.append('rc.name = %(rental_contract)s')
+    if not filters.get('apply_now'):
+        clauses.append('rci.invoice_date < %(now)s')
+    return 'AND'.join(clauses)
