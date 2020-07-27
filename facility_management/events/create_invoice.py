@@ -1,5 +1,6 @@
 import frappe
-from frappe.utils.data import today
+from frappe import _dict
+from frappe.utils.data import today, get_first_day, get_last_day
 
 
 def execute(**kwargs):
@@ -12,7 +13,7 @@ def execute(**kwargs):
         tenant_dues = rental_contract_items
 
     for tenant_due in tenant_dues:
-        if type(tenant_due) != dict:
+        if not isinstance(tenant_due, _dict):
             tenant_due = tenant_due.as_dict()
 
         tenant = tenant_due.get('tenant')
@@ -25,9 +26,11 @@ def execute(**kwargs):
         invoice = frappe.new_doc('Sales Invoice')
         invoice.update({
             'customer': frappe.db.get_value('Tenant', tenant, 'customer'),
-            'posting_date': tenant_due.get('invoice_date'),
+            'posting_date': get_first_day(tenant_due.get('invoice_date')),
+            'posting_time': 0,
             'due_date': tenant_due.get('invoice_date'),
-            'debit_to': frappe.db.get_value('Company', invoice.company, 'default_receivable_account')
+            'debit_to': frappe.db.get_value('Company', invoice.company, 'default_receivable_account'),
+            'set_posting_time': 1
         })
         invoice.append('items', {
             'item_code': rental_item,
@@ -37,7 +40,7 @@ def execute(**kwargs):
         invoice.set_missing_values()
         invoice.save()
 
-        _set_invoice_created(tenant_due.get('name'), invoice.name)
+        # _set_invoice_created(tenant_due.get('name'), invoice.name)
 
 
 def _set_invoice_created(name, invoice_ref):
@@ -69,7 +72,7 @@ def _get_tenant_dues(filters):
         """.format(clauses='AND ' + clauses if clauses else ''),
         {
             **filters,
-            'now': today()
+            'now': get_last_day(today())
         },
         as_dict=True
     )
