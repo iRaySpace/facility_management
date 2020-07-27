@@ -6,7 +6,8 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _
 from frappe.model.document import Document
-from frappe.utils.data import add_to_date, getdate
+from frappe.utils.data import add_to_date, getdate, nowdate
+from facility_management.helpers import get_status
 
 
 class RentalContract(Document):
@@ -26,9 +27,30 @@ class RentalContract(Document):
 		if not self.items:
 			# _generate_advance_payment(self)
 			_generate_items(self)
+		_set_status(self)
 
 	def on_submit(self):
 		_set_property_as_rented(self)
+
+
+def _set_status(renting):
+	status = None
+
+	if renting.docstatus == 0:
+		status = 'Draft'
+	elif renting.docstatus == 2:
+		status = 'Cancelled'
+	elif renting.docstatus == 1:
+		status = get_status({
+			'Active': [
+				renting.contract_end_date > nowdate()
+			],
+			'Expired': [
+				renting.contract_end_date < nowdate()
+			]
+		})
+
+	renting.db_set('status', status, update_modified=True)
 
 
 def _validate_contract_dates(renting):
