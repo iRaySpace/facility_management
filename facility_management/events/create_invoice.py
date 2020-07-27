@@ -69,7 +69,7 @@ def _get_tenant_dues(filters):
                 rci.parent,
                 rc.rental_amount,
                 rc.advance_paid_amount,
-                rc.tenant,
+                rc.tenant
             FROM `tabRental Contract Item` rci
             INNER JOIN `tabRental Contract` rc
             ON rci.parent = rc.name
