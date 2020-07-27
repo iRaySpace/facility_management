@@ -22,7 +22,11 @@ fixtures = [
                     "Expense Claim-pm_property_maintenance",
                     "Material Request-pm_property_maintenance",
                     "Asset Repair-pm_property_maintenance",
-                    "Sales Invoice-pm_rental_contract"
+                    "Sales Invoice-pm_rental_contract",
+                    "Sales Invoice-pm_property_sb",
+                    "Sales Invoice-pm_property",
+                    "Sales Invoice-pm_tenant",
+                    "Sales Invoice-pm_property_group"
                 ]
             ]
         ]

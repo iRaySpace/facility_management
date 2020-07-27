@@ -4,9 +4,10 @@
 
 from __future__ import unicode_literals
 import frappe
-from frappe import _
+from frappe import _, enqueue
 from frappe.model.document import Document
-from frappe.utils.data import add_to_date, getdate
+from frappe.utils.data import add_to_date, getdate, nowdate
+from facility_management.helpers import get_status
 
 
 class RentalContract(Document):
@@ -24,11 +25,39 @@ class RentalContract(Document):
 		_validate_contract_dates(self)
 		_validate_property(self)
 		if not self.items:
-			# _generate_advance_payment(self)
 			_generate_items(self)
+		_set_status(self)
 
 	def on_submit(self):
 		_set_property_as_rented(self)
+		if self.apply_invoices_now:
+			frappe.publish_realtime('msgprint', 'Applying invoices...')
+			enqueue(
+				'facility_management.events.create_invoice.execute',
+				rental_contract=self.name,
+				rental_contract_items=self.items,
+				apply_now=True,
+			)
+
+
+def _set_status(renting):
+	status = None
+
+	if renting.docstatus == 0:
+		status = 'Draft'
+	elif renting.docstatus == 2:
+		status = 'Cancelled'
+	elif renting.docstatus == 1:
+		status = get_status({
+			'Active': [
+				renting.contract_end_date > nowdate()
+			],
+			'Expired': [
+				renting.contract_end_date < nowdate()
+			]
+		})
+
+	renting.db_set('status', status, update_modified=True)
 
 
 def _validate_contract_dates(renting):
@@ -40,19 +69,6 @@ def _validate_property(renting):
 	rental_status = frappe.db.get_value('Property', renting.property, 'rental_status')
 	if rental_status == 'Rented':
 		frappe.throw(_('Please make choose unoccupied property.'))
-
-
-def _generate_advance_payment(renting):
-	"""
-		Create items for advance payment
-		:param renting:
-		:return:
-		"""
-	renting.append('items', {
-		'invoice_date': renting.posting_date,
-		'description': 'Advance Payment',
-		'is_invoice_created': 0
-	})
 
 
 def _generate_items(renting):
@@ -78,12 +94,12 @@ def _set_property_as_rented(renting):
 
 def _get_next_date(date, frequency):
 	next_date = date
-	if frequency == 'Daily':
-		next_date = add_to_date(next_date, days=1)
-	elif frequency == 'Weekly':
-		next_date = add_to_date(next_date, days=7)
-	elif frequency == 'Monthly':
+	if frequency == 'Monthly':
 		next_date = add_to_date(next_date, months=1)
+	elif frequency == 'Quarterly':
+		next_date = add_to_date(next_date, months=4)
+	elif frequency == 'Half-yearly':
+		next_date = add_to_date(next_date, months=6)
 	elif frequency == 'Yearly':
 		next_date = add_to_date(next_date, years=1)
 	return next_date

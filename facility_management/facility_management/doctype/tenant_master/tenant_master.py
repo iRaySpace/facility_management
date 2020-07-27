@@ -14,11 +14,22 @@ class TenantMaster(Document):
 		info = get_dashboard_info('Customer', self.customer)
 		self.set_onload('dashboard_info', info)
 
+	def validate(self):
+		_validate_tenant_name(self)
+
 	def after_insert(self):
 		_create_customer(self)
 
 
-def _create_customer(tenant_master):
+def _validate_tenant_name(tenant):
+	if tenant.tenant_type == 'Company':
+		tenant.first_name = ''
+		tenant.last_name = ''
+	else:
+		tenant.tenant_name = ' '.join([tenant.first_name, tenant.last_name])
+
+
+def _create_customer(tenant):
 	customer_group = frappe.get_value('Selling Settings', None, 'customer_group')
 	territory = frappe.get_value('Selling Settings', None, 'territory')
 	if not (customer_group and territory):
@@ -26,13 +37,12 @@ def _create_customer(tenant_master):
 
 	customer = frappe.get_doc({
 		'doctype': 'Customer',
-		'customer_name': tenant_master.tenant_name,
+		'customer_name': tenant.tenant_name,
 		'customer_group': customer_group,
 		'territory': territory,
 		'customer_type': 'Individual'
 	})
 	customer.insert(ignore_permissions=True)
 
-	frappe.db.set_value('Tenant Master', tenant_master.name, 'customer', customer.name)
+	frappe.db.set_value('Tenant Master', tenant.name, 'customer', customer.name)
 	frappe.msgprint(_('Customer {0} is created').format(customer.name), alert=True)
-

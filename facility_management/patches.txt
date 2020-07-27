@@ -1,1 +1,2 @@
 facility_management.patches.v0_1.add_initial_violation_categories
+facility_management.patches.v0_4.remove_pm_tenant_renting

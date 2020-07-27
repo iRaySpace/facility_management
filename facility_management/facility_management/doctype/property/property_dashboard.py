@@ -3,11 +3,11 @@ from frappe import _
 
 def get_data():
     return {
-        'fieldname': 'tenant',
+        'fieldname': 'property',
         'transactions': [
             {
                 'label': _('Documents'),
-                'items': ['Property Maintenance', 'Tenant Violation', 'Rental Contract'],
+                'items': ['Rental Contract'],
             }
         ]
     }

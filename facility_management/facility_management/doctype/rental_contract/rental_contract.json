@@ -6,9 +6,13 @@
  "field_order": [
   "tenant",
   "property",
+  "rent_paid_by_employer",
+  "apply_invoices_now",
   "column_break_5",
   "posting_date",
-  "rent_paid_by_employer",
+  "property_group",
+  "status",
+  "amended_from",
   "section_break_5",
   "contract_start_date",
   "contract_end_date",
@@ -26,8 +30,7 @@
   "terms_and_conditions_template",
   "terms_and_conditions",
   "section_break_20",
-  "items",
-  "amended_from"
+  "items"
  ],
  "fields": [
   {
@@ -169,10 +172,31 @@
    "options": "Rental Contract",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fetch_from": "property.property_group",
+   "fieldname": "property_group",
+   "fieldtype": "Link",
+   "label": "Real Estate Property",
+   "options": "Real Estate Property",
+   "read_only": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nDraft\nActive\nExpired\nCancelled",
+   "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "apply_invoices_now",
+   "fieldtype": "Check",
+   "label": "Apply Invoices Now"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-07-24 16:02:29.150290",
+ "modified": "2020-07-27 12:44:22.339735",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Rental Contract",

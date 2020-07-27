@@ -1,19 +1,25 @@
 frappe.ui.form.on('Sales Invoice', {
-  pm_tenant_renting: function(frm) {
-    _set_customer(frm);
+  pm_rental_contract: function(frm) {
+    _set_property_details(frm);
   }
 });
 
 
-async function _set_customer(frm) {
-  frm.set_value('customer', await _get_customer(frm.doc.pm_tenant_renting));
+async function _set_property_details(frm) {
+  const property_details = await _get_property_details(frm.doc.pm_rental_contract);
+  if (property_details) {
+    frm.set_value('customer', property_details.customer);
+    frm.set_value('pm_tenant', property_details.tenant);
+    frm.set_value('pm_property', property_details.property);
+    frm.set_value('pm_property_group', property_details.property_group);
+  }
 }
 
 
-async function _get_customer(tenant_renting) {
-  const { message: customer } = await frappe.call({
-    method: 'facility_management.api.tenant_renting.get_customer',
-    args: { tenant_renting }
+async function _get_property_details(rental_contract) {
+  const { message: property_details } = await frappe.call({
+    method: 'facility_management.api.sales_invoice.get_property_details',
+    args: { rental_contract },
   });
-  return customer;
+  return property_details;
 }

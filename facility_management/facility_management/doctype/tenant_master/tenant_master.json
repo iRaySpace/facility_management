@@ -14,6 +14,7 @@
   "gender",
   "dob",
   "contact_details_section",
+  "cr_no",
   "cpr",
   "cpr_expiry_date",
   "passport_no",
@@ -52,7 +53,7 @@
    "fieldname": "tenant_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Full Name",
+   "label": "Tenant Name",
    "reqd": 1,
    "unique": 1
   },
@@ -72,7 +73,8 @@
    "fieldname": "tenant_type",
    "fieldtype": "Select",
    "label": "Type",
-   "options": "Individual\nCompany"
+   "options": "Individual\nCompany",
+   "set_only_once": 1
   },
   {
    "fieldname": "gender",
@@ -150,11 +152,13 @@
    "label": "Contact Details"
   },
   {
+   "depends_on": "eval:doc.tenant_type==='Individual'",
    "fieldname": "cpr",
    "fieldtype": "Data",
    "label": "CPR"
   },
   {
+   "depends_on": "eval:doc.tenant_type==='Individual'",
    "fieldname": "cpr_expiry_date",
    "fieldtype": "Date",
    "label": "CPR Expiry Date"
@@ -198,9 +202,15 @@
    "fieldname": "email",
    "fieldtype": "Data",
    "label": "Email Address"
+  },
+  {
+   "depends_on": "eval:doc.tenant_type == \"Company\"",
+   "fieldname": "cr_no",
+   "fieldtype": "Data",
+   "label": "CR No"
   }
  ],
- "modified": "2020-07-24 16:12:40.734547",
+ "modified": "2020-07-27 09:14:31.677433",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Tenant Master",
