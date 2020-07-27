@@ -25,7 +25,6 @@ class RentalContract(Document):
 		_validate_contract_dates(self)
 		_validate_property(self)
 		if not self.items:
-			# _generate_advance_payment(self)
 			_generate_items(self)
 		_set_status(self)
 
@@ -62,19 +61,6 @@ def _validate_property(renting):
 	rental_status = frappe.db.get_value('Property', renting.property, 'rental_status')
 	if rental_status == 'Rented':
 		frappe.throw(_('Please make choose unoccupied property.'))
-
-
-def _generate_advance_payment(renting):
-	"""
-		Create items for advance payment
-		:param renting:
-		:return:
-		"""
-	renting.append('items', {
-		'invoice_date': renting.posting_date,
-		'description': 'Advance Payment',
-		'is_invoice_created': 0
-	})
 
 
 def _generate_items(renting):
