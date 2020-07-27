@@ -7,7 +7,7 @@ def get_data():
         'transactions': [
             {
                 'label': _('Documents'),
-                'items': ['Property Maintenance', 'Tenant Violation'],
+                'items': ['Property Maintenance', 'Tenant Violation', 'Rental Contract'],
             }
         ]
     }
