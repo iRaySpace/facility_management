@@ -100,12 +100,12 @@ def _set_property_as_rented(renting):
 
 def _get_next_date(date, frequency):
 	next_date = date
-	if frequency == 'Daily':
-		next_date = add_to_date(next_date, days=1)
-	elif frequency == 'Weekly':
-		next_date = add_to_date(next_date, days=7)
-	elif frequency == 'Monthly':
+	if frequency == 'Monthly':
 		next_date = add_to_date(next_date, months=1)
+	elif frequency == 'Quarterly':
+		next_date = add_to_date(next_date, months=4)
+	elif frequency == 'Half-yearly':
+		next_date = add_to_date(next_date, months=6)
 	elif frequency == 'Yearly':
 		next_date = add_to_date(next_date, years=1)
 	return next_date
