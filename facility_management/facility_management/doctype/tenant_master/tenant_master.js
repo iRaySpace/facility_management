@@ -6,4 +6,5 @@ frappe.ui.form.on('Tenant Master', {
 	refresh: refresh,
 	first_name: first_name,
 	last_name: last_name,
+	tenant_type: tenant_type,
 });

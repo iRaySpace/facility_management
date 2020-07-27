@@ -52,7 +52,7 @@
    "fieldname": "tenant_name",
    "fieldtype": "Data",
    "in_list_view": 1,
-   "label": "Full Name",
+   "label": "Tenant Name",
    "reqd": 1,
    "unique": 1
   },
@@ -200,7 +200,7 @@
    "label": "Email Address"
   }
  ],
- "modified": "2020-07-24 16:12:40.734547",
+ "modified": "2020-07-27 08:48:10.466283",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Tenant Master",
