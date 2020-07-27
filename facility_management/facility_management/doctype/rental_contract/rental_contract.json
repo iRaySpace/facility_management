@@ -6,9 +6,11 @@
  "field_order": [
   "tenant",
   "property",
+  "rent_paid_by_employer",
   "column_break_5",
   "posting_date",
-  "rent_paid_by_employer",
+  "property_group",
+  "amended_from",
   "section_break_5",
   "contract_start_date",
   "contract_end_date",
@@ -26,8 +28,7 @@
   "terms_and_conditions_template",
   "terms_and_conditions",
   "section_break_20",
-  "items",
-  "amended_from"
+  "items"
  ],
  "fields": [
   {
@@ -169,10 +170,18 @@
    "options": "Rental Contract",
    "print_hide": 1,
    "read_only": 1
+  },
+  {
+   "fetch_from": "property.property_group",
+   "fieldname": "property_group",
+   "fieldtype": "Link",
+   "label": "Real Estate Property",
+   "options": "Real Estate Property",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
- "modified": "2020-07-24 16:02:29.150290",
+ "modified": "2020-07-27 11:42:42.411447",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Rental Contract",
