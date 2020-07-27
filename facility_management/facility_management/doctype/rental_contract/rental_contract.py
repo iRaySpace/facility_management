@@ -4,7 +4,7 @@
 
 from __future__ import unicode_literals
 import frappe
-from frappe import _
+from frappe import _, enqueue
 from frappe.model.document import Document
 from frappe.utils.data import add_to_date, getdate, nowdate
 from facility_management.helpers import get_status
@@ -30,6 +30,14 @@ class RentalContract(Document):
 
 	def on_submit(self):
 		_set_property_as_rented(self)
+		if self.apply_invoices_now:
+			frappe.publish_realtime('msgprint', 'Applying invoices...')
+			enqueue(
+				'facility_management.events.create_invoice.execute',
+				rental_contract=self.name,
+				rental_contract_items=self.items,
+				apply_now=True,
+			)
 
 
 def _set_status(renting):

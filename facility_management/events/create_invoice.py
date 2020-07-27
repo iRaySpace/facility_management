@@ -3,10 +3,18 @@ from frappe.utils.data import today
 
 
 def execute(**kwargs):
+    rental_contract_items = kwargs.pop('rental_contract_items', None)
+
     tenant_dues = _get_tenant_dues(kwargs)
     rental_item = frappe.db.get_single_value('Facility Management Settings', 'rental_item')
 
+    if not tenant_dues and rental_contract_items:
+        tenant_dues = rental_contract_items
+
     for tenant_due in tenant_dues:
+        if type(tenant_due) != dict:
+            tenant_due = tenant_due.as_dict()
+
         tenant = tenant_due.get('tenant')
         description = tenant_due.get('description')
         rental_amount = tenant_due.get('rental_amount')
@@ -19,7 +27,7 @@ def execute(**kwargs):
             'customer': frappe.db.get_value('Tenant', tenant, 'customer'),
             'posting_date': tenant_due.get('invoice_date'),
             'due_date': tenant_due.get('invoice_date'),
-            'debit_to': frappe.db.get_value('Company', invoice.company, 'default_receivable_account'),
+            'debit_to': frappe.db.get_value('Company', invoice.company, 'default_receivable_account')
         })
         invoice.append('items', {
             'item_code': rental_item,
