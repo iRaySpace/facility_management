@@ -10,6 +10,7 @@
   "column_break_5",
   "posting_date",
   "property_group",
+  "status",
   "amended_from",
   "section_break_5",
   "contract_start_date",
@@ -178,10 +179,17 @@
    "label": "Real Estate Property",
    "options": "Real Estate Property",
    "read_only": 1
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nDraft\nActive\nExpired\nCancelled",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
- "modified": "2020-07-27 11:42:42.411447",
+ "modified": "2020-07-27 11:59:40.485487",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Rental Contract",
