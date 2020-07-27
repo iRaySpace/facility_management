@@ -4,6 +4,7 @@ from frappe.utils.data import today, get_first_day, get_last_day
 
 
 def execute(**kwargs):
+    rental_contract = kwargs.get('rental_contract', None)
     rental_contract_items = kwargs.pop('rental_contract_items', None)
 
     tenant_dues = _get_tenant_dues(kwargs)
@@ -21,6 +22,10 @@ def execute(**kwargs):
         rental_amount = tenant_due.get('rental_amount')
         advance_paid_amount = tenant_due.get('advance_paid_amount')
 
+        parent_rc = tenant_due.get('parent')
+        if not parent_rc:
+            parent_rc = rental_contract
+
         amount = advance_paid_amount if description == 'Advance Payment' else rental_amount
 
         invoice = frappe.new_doc('Sales Invoice')
@@ -30,7 +35,8 @@ def execute(**kwargs):
             'posting_time': 0,
             'due_date': tenant_due.get('invoice_date'),
             'debit_to': frappe.db.get_value('Company', invoice.company, 'default_receivable_account'),
-            'set_posting_time': 1
+            'set_posting_time': 1,
+            'pm_rental_contract': parent_rc
         })
         invoice.append('items', {
             'item_code': rental_item,
@@ -60,9 +66,10 @@ def _get_tenant_dues(filters):
                 rci.name,
                 rci.invoice_date,
                 rci.description,
+                rci.parent,
                 rc.rental_amount,
                 rc.advance_paid_amount,
-                rc.tenant
+                rc.tenant,
             FROM `tabRental Contract Item` rci
             INNER JOIN `tabRental Contract` rc
             ON rci.parent = rc.name
