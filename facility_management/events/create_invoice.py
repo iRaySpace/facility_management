@@ -9,6 +9,7 @@ def execute(**kwargs):
 
     tenant_dues = _get_tenant_dues(kwargs)
     rental_item = frappe.db.get_single_value('Facility Management Settings', 'rental_item')
+    submit_si = frappe.db.get_single_value('Facility Management Settings', 'submit_si')
 
     if not tenant_dues and rental_contract_items:
         tenant_dues = rental_contract_items
@@ -21,6 +22,7 @@ def execute(**kwargs):
         description = tenant_due.get('description')
         rental_amount = tenant_due.get('rental_amount')
         advance_paid_amount = tenant_due.get('advance_paid_amount')
+        customer = frappe.db.get_value('Tenant Master', tenant, 'customer')
 
         parent_rc = tenant_due.get('parent')
         if not parent_rc:
@@ -30,7 +32,7 @@ def execute(**kwargs):
 
         invoice = frappe.new_doc('Sales Invoice')
         invoice.update({
-            'customer': frappe.db.get_value('Tenant', tenant, 'customer'),
+            'customer': customer,
             'posting_date': get_first_day(tenant_due.get('invoice_date')),
             'posting_time': 0,
             'due_date': tenant_due.get('invoice_date'),
@@ -45,6 +47,9 @@ def execute(**kwargs):
         })
         invoice.set_missing_values()
         invoice.save()
+
+        if submit_si:
+            invoice.submit()
 
         # _set_invoice_created(tenant_due.get('name'), invoice.name)
 
