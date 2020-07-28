@@ -35,6 +35,7 @@ class RentalContract(Document):
 
 	def before_cancel(self):
 		_delink_sales_invoices(self)
+		_set_property_as_vacant(self)
 
 
 def _set_status(renting):
@@ -140,6 +141,12 @@ def _delink_sales_invoices(renting):
 	sales_invoices = frappe.get_all('Sales Invoice', filters={'pm_rental_contract': renting.name})
 	for sales_invoice in sales_invoices:
 		frappe.db.set_value('Sales Invoice', sales_invoice, 'pm_rental_contract', '')
+
+
+def _set_property_as_vacant(renting):
+	retain_rental_on_cancel = frappe.db.get_single_value('Facility Management Settings', 'retain_rental_on_cancel')
+	if not retain_rental_on_cancel:
+		frappe.db.set_value('Property', renting.property, 'rental_status', 'Vacant')
 
 
 def _get_next_date(date, frequency):

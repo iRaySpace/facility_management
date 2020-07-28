@@ -7,7 +7,8 @@
   "rental_item",
   "column_break_2",
   "invoice_on_start_date",
-  "submit_si"
+  "submit_si",
+  "retain_rental_on_cancel"
  ],
  "fields": [
   {
@@ -33,10 +34,17 @@
    "fieldname": "submit_si",
    "fieldtype": "Check",
    "label": "Submit Sales Invoice"
+  },
+  {
+   "default": "0",
+   "description": "Cancelled rental contract will not set the property as vacant",
+   "fieldname": "retain_rental_on_cancel",
+   "fieldtype": "Check",
+   "label": "Retain Rental on Cancel"
   }
  ],
  "issingle": 1,
- "modified": "2020-07-28 13:06:21.080461",
+ "modified": "2020-07-28 17:03:46.321280",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Facility Management Settings",
