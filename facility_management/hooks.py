@@ -103,20 +103,19 @@ doctype_js = {
 # ---------------
 # Hook on document methods and events
 
-# doc_events = {
-# 	"*": {
-# 		"on_update": "method",
-# 		"on_cancel": "method",
-# 		"on_trash": "method"
-#	}
-# }
+doc_events = {
+    "Sales Invoice": {
+        "validate": "facility_management.doc_events.sales_invoice.validate",
+    }
+}
 
 # Scheduled Tasks
 # ---------------
 
 scheduler_events = {
     "daily": [
-        "facility_management.events.create_invoice.execute"
+        "facility_management.events.create_invoice.execute",
+        "facility_management.events.cancel_rental_contract.execute"
     ]
 }
 

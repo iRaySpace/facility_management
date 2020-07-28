@@ -13,6 +13,7 @@ frappe.ui.form.on('Rental Contract', {
     },
 	refresh: function(frm) {
 	    _add_payment_entry(frm);
+	    _add_cancel_btn(frm);
 	},
 	contract_start_date: function(frm) {
 	    _set_start_invoice_date(frm);
@@ -41,9 +42,36 @@ function _add_payment_entry(frm) {
 }
 
 
+function _add_cancel_btn(frm) {
+  if (frm.doc.docstatus === 1) {
+    // remove cancel button and add contract disable
+    setTimeout(function() {
+      frm.page.set_secondary_action('Contract Disable', function() {
+        frappe.prompt(
+          [
+            {
+              fieldname: 'cancellation_date',
+              fieldtype: 'Date',
+              label: 'Cancellation Date',
+              description: 'Set as empty if you want to cancel the Rental Contract now.'
+            }
+          ],
+          function(values) {
+            if (values.cancellation_date) {
+              frm.set_value('cancellation_date', values.cancellation_date);
+            } else {
+              frm.savecancel();
+            }
+          },
+          'Rental Contract Cancel'
+        );
+      });
+      frm.page.btn_secondary.addClass('btn-danger');
+    }, 300);
+  }
+}
+
+
 function _set_start_invoice_date(frm) {
-    if (frm.doc.__islocal) {
-        const start_invoice_date = frappe.datetime.add_days(frm.doc.contract_start_date, -7);
-        frm.set_value('start_invoice_date', start_invoice_date);
-    }
+    frm.set_value('start_invoice_date', frm.doc.contract_start_date);
 }

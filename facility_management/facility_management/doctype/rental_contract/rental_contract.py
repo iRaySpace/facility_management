@@ -6,8 +6,8 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _, enqueue
 from frappe.model.document import Document
-from frappe.utils.data import add_to_date, getdate, nowdate
-from facility_management.helpers import get_status
+from frappe.utils.data import add_to_date, getdate, nowdate, now_datetime, get_first_day
+from facility_management.helpers import get_status, get_debit_to, set_invoice_created
 
 
 class RentalContract(Document):
@@ -31,13 +31,11 @@ class RentalContract(Document):
 	def on_submit(self):
 		_set_property_as_rented(self)
 		if self.apply_invoices_now:
-			frappe.publish_realtime('msgprint', 'Applying invoices...')
-			enqueue(
-				'facility_management.events.create_invoice.execute',
-				rental_contract=self.name,
-				rental_contract_items=self.items,
-				apply_now=True,
-			)
+			_generate_invoices_now(self)
+
+	def before_cancel(self):
+		_delink_sales_invoices(self)
+		_set_property_as_vacant(self)
 
 
 def _set_status(renting):
@@ -96,6 +94,59 @@ def _generate_items(renting):
 
 def _set_property_as_rented(renting):
 	frappe.db.set_value('Property', renting.property, 'rental_status', 'Rented')
+
+
+def _generate_invoices_now(renting):
+	def make_data(item_data):
+		return {
+			'customer': customer,
+			'due_date': item_data.invoice_date,
+			'posting_date': get_first_day(item_data.invoice_date),
+			'debit_to': debit_to,
+			'set_posting_time': 1,
+			'posting_time': 0,
+			'pm_rental_contract': renting.name,
+			'items': [
+				{
+					'item_code': rental_item,
+					'rate': renting.rental_amount,
+					'qty': 1
+				}
+			]
+		}
+
+	items = list(filter(lambda x: getdate(x.invoice_date) < getdate(now_datetime()), renting.items))
+	customer = frappe.db.get_value('Tenant Master', renting.tenant, 'customer')
+	rental_item = frappe.db.get_single_value('Facility Management Settings', 'rental_item')
+	submit_si = frappe.db.get_single_value('Facility Management Settings', 'submit_si')
+	debit_to = get_debit_to()
+
+	for item in items:
+		invoice_data = make_data(item)
+		items = invoice_data.pop('items')
+
+		invoice = frappe.new_doc('Sales Invoice')
+		invoice.update(invoice_data)
+		invoice.append('items', items[0])
+		invoice.set_missing_values()
+		invoice.save()
+
+		if submit_si:
+			invoice.submit()
+
+		set_invoice_created(item.name, invoice.name)
+
+
+def _delink_sales_invoices(renting):
+	sales_invoices = frappe.get_all('Sales Invoice', filters={'pm_rental_contract': renting.name})
+	for sales_invoice in sales_invoices:
+		frappe.db.set_value('Sales Invoice', sales_invoice, 'pm_rental_contract', '')
+
+
+def _set_property_as_vacant(renting):
+	retain_rental_on_cancel = frappe.db.get_single_value('Facility Management Settings', 'retain_rental_on_cancel')
+	if not retain_rental_on_cancel:
+		frappe.db.set_value('Property', renting.property, 'rental_status', 'Vacant')
 
 
 def _get_next_date(date, frequency):
