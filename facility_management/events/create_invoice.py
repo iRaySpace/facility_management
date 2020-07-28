@@ -1,8 +1,10 @@
 import frappe
 from frappe import _dict
 from frappe.utils.data import today, get_first_day, get_last_day
+from facility_management.helpers import set_invoice_created
 
 
+# TODO: remove unused codes
 def execute(**kwargs):
     rental_contract = kwargs.get('rental_contract', None)
     rental_contract_items = kwargs.pop('rental_contract_items', None)
@@ -51,12 +53,7 @@ def execute(**kwargs):
         if submit_si:
             invoice.submit()
 
-        # _set_invoice_created(tenant_due.get('name'), invoice.name)
-
-
-def _set_invoice_created(name, invoice_ref):
-    frappe.db.set_value('Rental Contract Item', name, 'is_invoice_created', 1)
-    frappe.db.set_value('Rental Contract Item', name, 'invoice_ref', invoice_ref)
+        set_invoice_created(tenant_due.get('name'), invoice.name)
 
 
 def _get_tenant_dues(filters):
