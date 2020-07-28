@@ -46,7 +46,26 @@ function _add_cancel_btn(frm) {
   if (frm.doc.docstatus === 1) {
     // remove cancel button and add contract disable
     setTimeout(function() {
-      frm.page.set_secondary_action('Contract Disable', () => frm.savecancel());
+      frm.page.set_secondary_action('Contract Disable', function() {
+        frappe.prompt(
+          [
+            {
+              fieldname: 'cancellation_date',
+              fieldtype: 'Date',
+              label: 'Cancellation Date',
+              description: 'Set as empty if you want to cancel the Rental Contract now.'
+            }
+          ],
+          function(values) {
+            if (values.cancellation_date) {
+              frm.set_value('cancellation_date', values.cancellation_date);
+            } else {
+              frm.savecancel();
+            }
+          },
+          'Rental Contract Cancel'
+        );
+      });
       frm.page.btn_secondary.addClass('btn-danger');
     }, 300);
   }

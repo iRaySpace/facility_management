@@ -18,6 +18,7 @@
   "contract_end_date",
   "start_invoice_date",
   "column_break_8",
+  "cancellation_date",
   "advance_paid_amount",
   "deposit_amount",
   "section_break_9",
@@ -191,10 +192,17 @@
    "fieldname": "apply_invoices_now",
    "fieldtype": "Check",
    "label": "Apply Invoices Now"
+  },
+  {
+   "allow_on_submit": 1,
+   "fieldname": "cancellation_date",
+   "fieldtype": "Date",
+   "label": "Cancellation Date",
+   "read_only": 1
   }
  ],
  "is_submittable": 1,
- "modified": "2020-07-28 17:07:00.509912",
+ "modified": "2020-07-28 17:17:06.077277",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Rental Contract",
