@@ -77,14 +77,20 @@ def _generate_items(renting):
 	:param renting:
 	:return:
 	"""
+	def make_item(invoice_date):
+		return {
+			'invoice_date': invoice_date,
+			'description': 'Rent Due',
+			'is_invoice_created': 0
+		}
+
+	if _get_invoice_on_start_date():
+		renting.append('items', make_item(renting.start_invoice_date))
+
 	end_date = getdate(renting.contract_end_date)
 	next_date = _get_next_date(getdate(renting.start_invoice_date), renting.rental_frequency)
 	while next_date < end_date:
-		renting.append('items', {
-			'invoice_date': next_date,
-			'description': 'Rent Due',
-			'is_invoice_created': 0
-		})
+		renting.append('items', make_item(next_date))
 		next_date = _get_next_date(next_date, renting.rental_frequency)
 
 
@@ -103,3 +109,7 @@ def _get_next_date(date, frequency):
 	elif frequency == 'Yearly':
 		next_date = add_to_date(next_date, years=1)
 	return next_date
+
+
+def _get_invoice_on_start_date():
+	return frappe.db.get_single_value('Facility Management Settings', 'invoice_on_start_date')
