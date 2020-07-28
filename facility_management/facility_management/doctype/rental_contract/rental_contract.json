@@ -80,7 +80,7 @@
    "fieldname": "contract_end_date",
    "fieldtype": "Date",
    "in_list_view": 1,
-   "label": "Contract Start End",
+   "label": "Contract End Date",
    "reqd": 1
   },
   {
@@ -194,7 +194,7 @@
   }
  ],
  "is_submittable": 1,
- "modified": "2020-07-28 14:05:53.117908",
+ "modified": "2020-07-28 17:07:00.509912",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Rental Contract",
