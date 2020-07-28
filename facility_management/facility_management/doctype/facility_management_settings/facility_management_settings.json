@@ -6,7 +6,8 @@
  "field_order": [
   "rental_item",
   "column_break_2",
-  "invoice_on_start_date"
+  "invoice_on_start_date",
+  "submit_si"
  ],
  "fields": [
   {
@@ -25,10 +26,17 @@
    "fieldname": "invoice_on_start_date",
    "fieldtype": "Check",
    "label": "Invoice on Start Date"
+  },
+  {
+   "default": "0",
+   "description": "Submit generated Sales Invoice from Rental Contract",
+   "fieldname": "submit_si",
+   "fieldtype": "Check",
+   "label": "Submit Sales Invoice"
   }
  ],
  "issingle": 1,
- "modified": "2020-07-28 09:09:25.779422",
+ "modified": "2020-07-28 13:06:21.080461",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Facility Management Settings",
