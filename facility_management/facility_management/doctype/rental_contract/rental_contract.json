@@ -26,11 +26,11 @@
   "column_break_16",
   "ewa_limit",
   "is_ewa_inclusive",
+  "section_break_20",
+  "items",
   "section_break_11",
   "terms_and_conditions_template",
-  "terms_and_conditions",
-  "section_break_20",
-  "items"
+  "terms_and_conditions"
  ],
  "fields": [
   {
@@ -150,11 +150,9 @@
    "fetch_from": "terms_and_conditions_template.terms",
    "fieldname": "terms_and_conditions",
    "fieldtype": "Text Editor",
-   "label": "Terms and Conditions",
-   "reqd": 1
+   "label": "Terms and Conditions"
   },
   {
-   "collapsible": 1,
    "fieldname": "section_break_20",
    "fieldtype": "Section Break",
    "label": "Invoice Details"
@@ -196,7 +194,7 @@
   }
  ],
  "is_submittable": 1,
- "modified": "2020-07-27 12:44:22.339735",
+ "modified": "2020-07-28 09:02:02.873514",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Rental Contract",
