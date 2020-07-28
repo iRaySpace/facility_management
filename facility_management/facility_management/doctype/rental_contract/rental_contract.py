@@ -33,6 +33,9 @@ class RentalContract(Document):
 		if self.apply_invoices_now:
 			_generate_invoices_now(self)
 
+	def before_cancel(self):
+		_delink_sales_invoices(self)
+
 
 def _set_status(renting):
 	status = None
@@ -131,6 +134,12 @@ def _generate_invoices_now(renting):
 			invoice.submit()
 
 		set_invoice_created(item.name, invoice.name)
+
+
+def _delink_sales_invoices(renting):
+	sales_invoices = frappe.get_all('Sales Invoice', filters={'pm_rental_contract': renting.name})
+	for sales_invoice in sales_invoices:
+		frappe.db.set_value('Sales Invoice', sales_invoice, 'pm_rental_contract', '')
 
 
 def _get_next_date(date, frequency):

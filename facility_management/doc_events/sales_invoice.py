@@ -17,3 +17,4 @@ def _set_missing_values(invoice):
         invoice.pm_tenant = rental_contract.get('tenant')
         invoice.pm_property = rental_contract.get('property')
         invoice.pm_property_group = rental_contract.get('property_group')
+        invoice.remarks = invoice.pm_rental_contract

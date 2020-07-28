@@ -13,6 +13,7 @@ frappe.ui.form.on('Rental Contract', {
     },
 	refresh: function(frm) {
 	    _add_payment_entry(frm);
+	    _add_cancel_btn(frm);
 	},
 	contract_start_date: function(frm) {
 	    _set_start_invoice_date(frm);
@@ -38,6 +39,17 @@ function _add_payment_entry(frm) {
             frappe.new_doc('Payment Entry');
         });
     }
+}
+
+
+function _add_cancel_btn(frm) {
+  if (frm.doc.docstatus === 1) {
+    // remove cancel button and add contract disable
+    setTimeout(function() {
+      frm.page.set_secondary_action('Contract Disable', () => frm.savecancel());
+      frm.page.btn_secondary.addClass('btn-danger');
+    }, 300);
+  }
 }
 
 
