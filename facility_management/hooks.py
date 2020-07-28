@@ -114,7 +114,8 @@ doc_events = {
 
 scheduler_events = {
     "daily": [
-        "facility_management.events.create_invoice.execute"
+        "facility_management.events.create_invoice.execute",
+        "facility_management.events.cancel_rental_contract.execute"
     ]
 }
 
