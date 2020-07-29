@@ -54,11 +54,17 @@ function _add_cancel_btn(frm) {
               fieldtype: 'Date',
               label: 'Cancellation Date',
               description: 'Set as empty if you want to cancel the Rental Contract now.'
-            }
+            },
+            {
+              fieldname: 'reason_for_cancellation',
+              fieldtype: 'Small Text',
+              label: 'Reason for Cancellation'
+            },
           ],
           function(values) {
             if (values.cancellation_date) {
               frm.set_value('cancellation_date', values.cancellation_date);
+              frm.set_value('reason_for_cancellation', values.reason_for_cancellation);
             } else {
               frm.savecancel();
             }
