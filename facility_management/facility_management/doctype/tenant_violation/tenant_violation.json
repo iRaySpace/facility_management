@@ -83,14 +83,14 @@
   {
    "fieldname": "required_owner_action",
    "fieldtype": "Small Text",
-   "label": "Required Owner Action"
+   "label": "Required Tenant Action"
   },
   {
    "fieldname": "section_break_10",
    "fieldtype": "Section Break"
   }
  ],
- "modified": "2020-07-29 13:19:57.197072",
+ "modified": "2020-07-29 13:58:49.202917",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Tenant Violation",
