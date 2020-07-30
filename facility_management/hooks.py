@@ -44,7 +44,7 @@ fixtures = [
 # web_include_js = "/assets/facility_management/js/facility_management.js"
 
 # include js in page
-# page_js = {"page" : "public/js/file.js"}
+page_js = {"dashboard": "public/js/dashboard.js"}
 
 # include js in doctype views
 doctype_js = {
