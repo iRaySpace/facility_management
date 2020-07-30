@@ -44,7 +44,7 @@ class CustomDashboardChart extends DashboardChart {
 				title: this.chart_doc.chart_name,
 				data: this.data,
 				type: this.chart_doc.type.toLowerCase(),
-				colors: [this.chart_doc.color || "light-blue"],
+				colors: ['#FFC108', '#2096F3', '#F44336', '#009588', '#04A9F4'],
 				axisOptions: {
 					xIsSeries: this.chart_doc.timeseries,
 					shortenYAxisNumbers: 1
