@@ -14,7 +14,7 @@ def get_data():
                     'type': 'doctype',
                     'name': 'Property Checkup'
                 },
-                                {
+                {
                     'type': 'doctype',
                     'name': 'Real Estate Property'
                 },
