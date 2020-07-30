@@ -1,0 +1,13 @@
+{
+ "creation": "2020-07-30 11:20:25.796961",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart Source",
+ "idx": 0,
+ "modified": "2020-07-30 11:20:25.796961",
+ "modified_by": "Administrator",
+ "module": "Facility Management",
+ "name": "Rental Property Occupancy",
+ "owner": "Administrator",
+ "source_name": "Rental Property Occupancy",
+ "timeseries": 0
+}

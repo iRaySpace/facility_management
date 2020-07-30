@@ -1,0 +1,13 @@
+{
+ "creation": "2020-07-30 13:01:41.912301",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart Source",
+ "idx": 0,
+ "modified": "2020-07-30 13:01:41.912301",
+ "modified_by": "Administrator",
+ "module": "Facility Management",
+ "name": "Rental Billing",
+ "owner": "Administrator",
+ "source_name": "Rental Billing",
+ "timeseries": 0
+}
