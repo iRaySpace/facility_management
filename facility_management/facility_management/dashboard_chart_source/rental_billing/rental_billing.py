@@ -3,9 +3,6 @@ from frappe.utils.data import nowdate, add_months, getdate
 from facility_management.utils.functools import group_by, sum_by, get_first_and_pluck_by
 from functools import reduce
 
-# Total Billed Rent (Sum of Rental Item in Submitted Invoices)
-# Total Paid (Paid Amount of Total Billed Rental Item)
-# Total Unpaid (Unpaid Amount of the Total Billed Rent).
 
 _month_range = 6
 
