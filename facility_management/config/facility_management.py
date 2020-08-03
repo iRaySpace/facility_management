@@ -14,7 +14,7 @@ def get_data():
                     'type': 'doctype',
                     'name': 'Property Checkup'
                 },
-                                {
+                {
                     'type': 'doctype',
                     'name': 'Real Estate Property'
                 },
@@ -28,7 +28,15 @@ def get_data():
                 },
                 {
                     'type': 'doctype',
+                    'name': 'EWA Billing'
+                },
+                {
+                    'type': 'doctype',
                     'name': 'Tenant Violation'
+                },
+                {
+                    'type': 'doctype',
+                    'name': 'FM Dashboard Balance'
                 },
                 {
                     'type': 'doctype',
@@ -52,6 +60,10 @@ def get_data():
         {
             'label': _('Setup'),
             'items': [
+                {
+                    'type': 'doctype',
+                    'name': 'Facility Management Settings'
+                },
                 {
                     'type': 'doctype',
                     'name': 'Property Facility'
