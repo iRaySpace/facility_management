@@ -1,0 +1,13 @@
+{
+ "creation": "2020-08-03 15:52:00.790150",
+ "docstatus": 0,
+ "doctype": "Dashboard Chart Source",
+ "idx": 0,
+ "modified": "2020-08-03 15:52:00.790150",
+ "modified_by": "Administrator",
+ "module": "Facility Management",
+ "name": "Rental Value",
+ "owner": "Administrator",
+ "source_name": "Rental Value",
+ "timeseries": 0
+}
