@@ -30,6 +30,33 @@ fixtures = [
                 ]
             ]
         ]
+    },
+    {
+        "doctype": "Property Setter",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                    "Dashboard Chart-type-options"
+                ]
+            ]
+        ]
+    },
+    {
+        "doctype": "Dashboard Chart",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                    "Rental Value",
+                    "Rental Revenue",
+                    "Rental Billing",
+                    "Rental Property Occupancy"
+                ]
+            ]
+        ]
     }
 ]
 # Includes in <head>
