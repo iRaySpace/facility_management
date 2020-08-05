@@ -30,6 +30,18 @@ fixtures = [
                 ]
             ]
         ]
+    },
+    {
+        "doctype": "Property Setter",
+        "filters": [
+            [
+                "name",
+                "in",
+                [
+                    "Dashboard Chart-type-options"
+                ]
+            ]
+        ]
     }
 ]
 # Includes in <head>

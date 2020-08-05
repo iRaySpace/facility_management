@@ -1,0 +1,18 @@
+[
+ {
+  "default_value": null,
+  "doc_type": "Dashboard Chart",
+  "docstatus": 0,
+  "doctype": "Property Setter",
+  "doctype_or_field": "DocField",
+  "field_name": "type",
+  "modified": "2020-07-30 11:41:06.243144",
+  "name": "Dashboard Chart-type-options",
+  "parent": null,
+  "parentfield": null,
+  "parenttype": null,
+  "property": "options",
+  "property_type": "Text",
+  "value": "Line\nBar\nPie"
+ }
+]
