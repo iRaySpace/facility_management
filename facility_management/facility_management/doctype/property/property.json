@@ -10,6 +10,7 @@
   "property_no",
   "property_floor",
   "column_break_4",
+  "title",
   "property_type",
   "property_status",
   "sb_rental",
@@ -223,9 +224,15 @@
    "fieldname": "insurance_end_date",
    "fieldtype": "Date",
    "label": "Insurance End Date"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title"
   }
  ],
- "modified": "2020-07-24 16:16:42.250952",
+ "modified": "2020-08-11 17:14:04.083811",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Property",
@@ -244,7 +251,9 @@
    "write": 1
   }
  ],
+ "search_fields": "title",
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "title",
  "track_changes": 1
 }

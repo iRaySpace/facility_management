@@ -9,6 +9,7 @@
   "last_name",
   "tenant_name",
   "column_break_4",
+  "title",
   "customer",
   "tenant_type",
   "gender",
@@ -208,9 +209,15 @@
    "fieldname": "cr_no",
    "fieldtype": "Data",
    "label": "CR No"
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title"
   }
  ],
- "modified": "2020-07-27 09:14:31.677433",
+ "modified": "2020-08-11 17:15:13.104652",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Tenant Master",
@@ -229,9 +236,9 @@
    "write": 1
   }
  ],
- "search_fields": "tenant_name,mobile_no,mobile_no_2,email,cpr",
+ "search_fields": "title,tenant_name,mobile_no,mobile_no_2,email,cpr",
  "sort_field": "modified",
  "sort_order": "DESC",
- "title_field": "tenant_name",
+ "title_field": "title",
  "track_changes": 1
 }
