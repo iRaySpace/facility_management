@@ -42,7 +42,7 @@ def _get_active_contracts(filters):
             AND status = 'Active'
             {clauses}
         """.format(
-            clauses=_get_clauses(filters)
+            clauses=_get_clauses(filters) or ''
         ),
         filters,
         as_dict=1
@@ -59,7 +59,7 @@ def _get_possible_contracts(filters):
             AND status != 'Active'
             {clauses}
         """.format(
-            clauses=_get_clauses(filters)
+            clauses=_get_clauses(filters) or ''
         ),
         filters,
         as_dict=1
