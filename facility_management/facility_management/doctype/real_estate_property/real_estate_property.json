@@ -9,6 +9,7 @@
   "address_line_1",
   "address_line_2",
   "cost_center",
+  "letter_head",
   "insured",
   "column_break_8",
   "title",
@@ -109,9 +110,15 @@
    "fieldname": "title",
    "fieldtype": "Data",
    "label": "Title"
+  },
+  {
+   "fieldname": "letter_head",
+   "fieldtype": "Link",
+   "label": "Letter Head",
+   "options": "Letter Head"
   }
  ],
- "modified": "2020-08-13 13:04:01.511615",
+ "modified": "2020-08-13 13:13:38.483463",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Real Estate Property",
