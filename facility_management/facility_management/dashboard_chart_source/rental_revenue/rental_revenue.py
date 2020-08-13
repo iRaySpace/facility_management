@@ -1,13 +1,17 @@
 import frappe
+import json
 from functools import reduce
-from facility_management.utils.functools import group_by, sum_by, get_first_and_pluck_by
+from facility_management.utils.functools import group_by, sum_by, get_first_and_pluck_by, concat_not_empty
 
 
 @frappe.whitelist()
-def get():
+def get(filters):
+    filters = json.loads(filters)
+    labels = _get_labels()
+    datasets = _get_datasets(filters)
     return {
-        'labels': _get_labels(),
-        'datasets': _get_datasets(),
+        'labels': labels,
+        'datasets': datasets,
     }
 
 
@@ -15,8 +19,8 @@ def _get_labels():
     return _get_property_types()
 
 
-def _get_datasets():
-    rental_contracts = _get_rental_contracts()
+def _get_datasets(filters):
+    rental_contracts = _get_rental_contracts(filters)
     total_by_property_type = _get_total_by_property_type(rental_contracts)
     return [
         {
@@ -36,16 +40,30 @@ def _get_property_types():
     return list(filter(lambda x: x, options))
 
 
-def _get_rental_contracts():
-    rental_contracts = frappe.db.sql("""
-        SELECT rc.rental_amount, p.property_type
-        FROM `tabRental Contract` rc
-        INNER JOIN `tabProperty` p
-        ON rc.property = p.name
-        WHERE rc.docstatus = 1
-        AND rc.status = 'Active'
-    """, as_dict=1)
+def _get_rental_contracts(filters):
+    rental_contracts = frappe.db.sql(
+        """
+            SELECT rc.rental_amount, p.property_type
+            FROM `tabRental Contract` rc
+            INNER JOIN `tabProperty` p
+            ON rc.property = p.name
+            WHERE rc.docstatus = 1
+            AND rc.status = 'Active'
+            {clauses}
+        """.format(
+            clauses=_get_clauses(filters)
+        ),
+        filters,
+        as_dict=1
+    )
     return rental_contracts
+
+
+def _get_clauses(filters):
+    clauses = []
+    if filters.get('property_group'):
+        clauses.append('p.property_group = %(property_group)s')
+    return concat_not_empty(' AND ', ' AND '.join(clauses))
 
 
 def _get_total_by_property_type(rental_contracts):
