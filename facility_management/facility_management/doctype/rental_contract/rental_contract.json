@@ -9,6 +9,7 @@
   "rent_paid_by_employer",
   "apply_invoices_now",
   "column_break_5",
+  "title",
   "posting_date",
   "property_group",
   "status",
@@ -32,8 +33,7 @@
   "items",
   "section_break_11",
   "terms_and_conditions_template",
-  "terms_and_conditions",
-  "title"
+  "terms_and_conditions"
  ],
  "fields": [
   {
@@ -209,14 +209,14 @@
    "read_only": 1
   },
   {
+   "depends_on": "eval:!doc.title",
    "fieldname": "title",
    "fieldtype": "Data",
-   "hidden": 1,
    "label": "Title"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-08-11 17:15:55.646048",
+ "modified": "2020-08-13 13:02:29.639939",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Rental Contract",
