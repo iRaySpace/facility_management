@@ -11,6 +11,7 @@
   "cost_center",
   "insured",
   "column_break_8",
+  "title",
   "city",
   "state",
   "zip_code",
@@ -19,8 +20,7 @@
   "insurance_company",
   "insurance_type",
   "insurance_start_date",
-  "insurance_end_date",
-  "title"
+  "insurance_end_date"
  ],
  "fields": [
   {
@@ -105,13 +105,13 @@
    "label": "Insurance End Date"
   },
   {
+   "depends_on": "eval:!doc.title",
    "fieldname": "title",
    "fieldtype": "Data",
-   "hidden": 1,
    "label": "Title"
   }
  ],
- "modified": "2020-08-11 17:16:48.771416",
+ "modified": "2020-08-13 13:04:01.511615",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Real Estate Property",
