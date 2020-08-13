@@ -226,13 +226,13 @@
    "label": "Insurance End Date"
   },
   {
+   "depends_on": "eval:!doc.title",
    "fieldname": "title",
    "fieldtype": "Data",
-   "hidden": 1,
    "label": "Title"
   }
  ],
- "modified": "2020-08-11 17:14:04.083811",
+ "modified": "2020-08-13 13:06:02.703835",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Property",

@@ -211,13 +211,13 @@
    "label": "CR No"
   },
   {
+   "depends_on": "eval:!doc.title",
    "fieldname": "title",
    "fieldtype": "Data",
-   "hidden": 1,
    "label": "Title"
   }
  ],
- "modified": "2020-08-11 17:15:13.104652",
+ "modified": "2020-08-13 13:05:10.842842",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Tenant Master",

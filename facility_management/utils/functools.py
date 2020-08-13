@@ -18,3 +18,7 @@ def sum_by(key, rows):
 def get_first_and_pluck_by(key, rows):
     filtered = list(filter(lambda x: x.get(key), rows))
     return filtered[0].get(key) if filtered else None
+
+
+def concat_not_empty(a, not_empty):
+    return a + not_empty if not_empty else None
