@@ -1,17 +1,20 @@
 import frappe
+import json
 from frappe.utils.data import nowdate, add_months, getdate
-from facility_management.utils.functools import group_by, sum_by, get_first_and_pluck_by
+from facility_management.utils.functools import group_by, sum_by, get_first_and_pluck_by, concat_not_empty
 from functools import reduce
-
 
 _month_range = 6
 
 
 @frappe.whitelist()
-def get():
+def get(filters):
+    filters = json.loads(filters)
+    labels = _get_labels()
+    datasets = _get_datasets(filters)
     return {
-        'labels': _get_labels(),
-        'datasets': _get_datasets(),
+        'labels': labels,
+        'datasets': datasets,
     }
 
 
@@ -19,7 +22,7 @@ def _get_labels():
     return _get_months()
 
 
-def _get_datasets():
+def _get_datasets(filters):
     def make_month_si(data):
         posting_date = data.pop('posting_date')
         data['month'] = posting_date.strftime('%b')
@@ -35,8 +38,12 @@ def _get_datasets():
             FROM `tabSales Invoice`
             WHERE docstatus = 1
             AND posting_date BETWEEN %(from_date)s AND %(to_date)s
-        """,
+            {clauses}
+        """.format(
+            clauses=_get_clauses(filters) or ''
+        ),
         {
+            **filters,
             'from_date': add_months(nowdate(), -_month_range),
             'to_date': nowdate()
         },
@@ -62,6 +69,13 @@ def _get_datasets():
             'values': _get_values(unpaid_total)
         }
     ]
+
+
+def _get_clauses(filters):
+    clauses = []
+    if filters.get('property_group'):
+        clauses.append('pm_property_group = %(property_group)s')
+    return concat_not_empty(' AND ', ' AND '.join(clauses))
 
 
 def _get_months():

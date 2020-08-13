@@ -10,6 +10,13 @@ frappe.pages['dashboard'].on_page_load = function(wrapper) {
 	frappe.dashboard = new CustomDashboard(wrapper);
 	$(wrapper).bind('show', function() {
 		frappe.dashboard.show();
+		const { dashboard_name } = frappe.dashboard;
+		if (dashboard_name == 'Facility Management') {
+            frappe.dashboard.page.add_menu_item('Filter', async function() {
+                const filter_values = await _show_filter_dialog();
+                apply_dashboard_filters(filter_values);
+            });
+		}
 	});
 }
 
@@ -24,8 +31,13 @@ class CustomDashboard extends Dashboard {
 				let chart_container = $("<div></div>");
 				chart_container.appendTo(this.container);
 
-				frappe.model.with_doc("Dashboard Chart", chart.chart).then( chart_doc => {
-					let dashboard_chart = new CustomDashboardChart(chart_doc, chart_container);
+				frappe.model.with_doc("Dashboard Chart", chart.chart).then(chart_doc => {
+				    const filters = {
+				        ...JSON.parse(chart_doc.filters_json),
+				        ...frappe.dashboard.__global_filters,
+				    };
+				    chart_doc.filters_json = JSON.stringify(filters);
+				    let dashboard_chart = new CustomDashboardChart(chart_doc, chart_container);
 					dashboard_chart.show();
 				});
 			});
@@ -57,4 +69,34 @@ class CustomDashboardChart extends DashboardChart {
 			}
 		}
     }
+}
+
+
+function _show_filter_dialog() {
+    return new Promise(function(resolve, reject) {
+        const filter_dialog = new frappe.ui.Dialog({
+            title: 'Enter filters',
+            fields: [
+                {
+                    fieldtype: 'Link',
+                    fieldname: 'property_group',
+                    label: 'Real Estate Property',
+                    options: 'Real Estate Property',
+                },
+            ],
+            primary_action_label: 'Filter',
+            primary_action: function(values) {
+                resolve(values);
+                filter_dialog.hide();
+            }
+        });
+        filter_dialog.show();
+    });
+}
+
+
+function apply_dashboard_filters(filters) {
+    frappe.dashboard.__global_filters = filters;
+    frappe.dashboard.container.children().remove();
+    frappe.dashboard.refresh();
 }
