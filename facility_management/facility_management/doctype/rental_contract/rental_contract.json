@@ -32,7 +32,8 @@
   "items",
   "section_break_11",
   "terms_and_conditions_template",
-  "terms_and_conditions"
+  "terms_and_conditions",
+  "title"
  ],
  "fields": [
   {
@@ -206,10 +207,16 @@
    "fieldtype": "Data",
    "label": "Reason for Cancellation",
    "read_only": 1
+  },
+  {
+   "fieldname": "title",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Title"
   }
  ],
  "is_submittable": 1,
- "modified": "2020-07-29 13:11:32.845079",
+ "modified": "2020-08-11 17:15:55.646048",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Rental Contract",
@@ -230,7 +237,9 @@
    "write": 1
   }
  ],
+ "search_fields": "title",
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "title",
  "track_changes": 1
 }
