@@ -24,7 +24,7 @@ def _get_columns(filters):
 
 	return [
 		make_column('Property Name', 'property_name', 130),
-		make_column('Property', 'property', 110),
+		make_column('Property', 'property', 180, 'Link', 'Property'),
 		make_column('Property Type', 'property_type', 110),
 		make_column('Is Occupied', 'is_occupied', 80, 'Check')
 	]
@@ -63,8 +63,8 @@ def _get_rented_properties():
 			make_data,
 			frappe.db.sql("""
 				SELECT property 
-				FROM `tabTenant Renting`
-				WHERE %s 
+				FROM `tabRental Contract`
+				WHERE %s
 				BETWEEN contract_start_date AND contract_end_date
 			""", nowdate(), as_dict=True)
 		)
