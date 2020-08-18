@@ -1,4 +1,5 @@
 {
+ "allow_rename": 1,
  "autoname": "field:property_name",
  "creation": "2020-02-17 20:15:12.118014",
  "doctype": "DocType",
@@ -118,7 +119,7 @@
    "options": "Letter Head"
   }
  ],
- "modified": "2020-08-13 13:13:38.483463",
+ "modified": "2020-08-18 13:15:15.238472",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Real Estate Property",

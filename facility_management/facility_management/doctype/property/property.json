@@ -1,4 +1,5 @@
 {
+ "allow_rename": 1,
  "autoname": "format:{property_group}-{property_no}",
  "creation": "2020-02-17 20:23:15.315787",
  "doctype": "DocType",
@@ -232,7 +233,7 @@
    "label": "Title"
   }
  ],
- "modified": "2020-08-13 13:06:02.703835",
+ "modified": "2020-08-18 13:14:39.848199",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Property",
