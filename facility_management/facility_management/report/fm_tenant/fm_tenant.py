@@ -64,7 +64,7 @@ def _get_data(filters):
 			t.mobile_no,
 			t.mobile_no_2,
 			t.email
-		FROM `tabTenant Renting` tr
+		FROM `tabRental Contract` tr
 		LEFT JOIN `tabTenant` t ON tr.tenant =  t.name
 	""", as_dict=True)
 
