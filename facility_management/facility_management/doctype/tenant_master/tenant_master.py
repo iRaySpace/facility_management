@@ -6,6 +6,7 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _
 from frappe.model.document import Document
+from frappe.model.rename_doc import rename_doc
 from erpnext.accounts.party import get_dashboard_info
 
 
@@ -13,6 +14,10 @@ class TenantMaster(Document):
 	def onload(self):
 		info = get_dashboard_info('Customer', self.customer)
 		self.set_onload('dashboard_info', info)
+
+	def after_rename(self, old, new, merge):
+		if self.customer:
+			rename_doc('Customer', self.customer, new)
 
 	def validate(self):
 		_validate_tenant_name(self)
