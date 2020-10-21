@@ -152,8 +152,17 @@ def _update_items(renting):
 			_generate_items(renting)
 		)
 	)
-	for item in items:
-		renting.append('items', item)
+	last_idx = len(existing_items)
+	for count, item in enumerate(items):
+		last_idx = last_idx + 1
+		frappe.get_doc({
+			**item,
+			'idx': last_idx,
+			'doctype': 'Rental Contract Item',
+			'parent': renting.name,
+			'parentfield': 'items',
+			'parenttype': 'Rental Contract'
+		}).save()
 
 
 def _delink_sales_invoices(renting):

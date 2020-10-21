@@ -163,6 +163,7 @@
    "label": "Invoice Details"
   },
   {
+   "allow_on_submit": 1,
    "fieldname": "items",
    "fieldtype": "Table",
    "options": "Rental Contract Item"
@@ -218,7 +219,7 @@
   }
  ],
  "is_submittable": 1,
- "modified": "2020-10-21 17:12:02.773697",
+ "modified": "2020-10-21 17:47:37.673917",
  "modified_by": "pangit413@gmail.com",
  "module": "Facility Management",
  "name": "Rental Contract",
