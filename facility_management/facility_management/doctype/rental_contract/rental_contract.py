@@ -25,13 +25,16 @@ class RentalContract(Document):
 		_validate_contract_dates(self)
 		_validate_property(self)
 		if not self.items:
-			_generate_items(self)
+			self.items = _generate_items(self)
 		_set_status(self)
 
 	def on_submit(self):
 		_set_property_as_rented(self)
 		if self.apply_invoices_now:
 			_generate_invoices_now(self)
+
+	def on_update_after_submit(self):
+		_update_items(self)
 
 	def before_cancel(self):
 		_delink_sales_invoices(self)
@@ -82,14 +85,18 @@ def _generate_items(renting):
 			'is_invoice_created': 0
 		}
 
+	items = []
+
 	if _get_invoice_on_start_date():
-		renting.append('items', make_item(renting.start_invoice_date))
+		items.append(make_item(renting.start_invoice_date))
 
 	end_date = getdate(renting.contract_end_date)
 	next_date = _get_next_date(getdate(renting.start_invoice_date), renting.rental_frequency)
 	while next_date < end_date:
-		renting.append('items', make_item(next_date))
+		items.append(make_item(next_date))
 		next_date = _get_next_date(next_date, renting.rental_frequency)
+
+	return items
 
 
 def _set_property_as_rented(renting):
@@ -135,6 +142,27 @@ def _generate_invoices_now(renting):
 			invoice.submit()
 
 		set_invoice_created(item.name, invoice.name)
+
+
+def _update_items(renting):
+	existing_items = list(map(lambda x: x.invoice_date, renting.items))
+	items = list(
+		filter(
+			lambda x: x.get('invoice_date').strftime('%Y-%m-%d') not in existing_items,
+			_generate_items(renting)
+		)
+	)
+	last_idx = len(existing_items)
+	for count, item in enumerate(items):
+		last_idx = last_idx + 1
+		frappe.get_doc({
+			**item,
+			'idx': last_idx,
+			'doctype': 'Rental Contract Item',
+			'parent': renting.name,
+			'parentfield': 'items',
+			'parenttype': 'Rental Contract'
+		}).save()
 
 
 def _delink_sales_invoices(renting):
