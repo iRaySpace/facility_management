@@ -25,7 +25,7 @@ class RentalContract(Document):
 		_validate_contract_dates(self)
 		_validate_property(self)
 		if not self.items:
-			self.items = _generate_items(self)
+			self.update({'items': _generate_items(self)})
 		_set_status(self)
 
 	def on_submit(self):
