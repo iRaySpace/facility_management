@@ -80,7 +80,7 @@ def _generate_items(renting):
 	"""
 	def make_item(invoice_date):
 		return {
-			'invoice_date': invoice_date,
+			'invoice_date': getdate(invoice_date),
 			'description': 'Rent Due',
 			'is_invoice_created': 0
 		}
