@@ -31,6 +31,8 @@ def _validate_tenant_name(tenant):
 		tenant.first_name = ''
 		tenant.last_name = ''
 	else:
+		if not tenant.first_name or not tenant.last_name:
+			frappe.throw(_('Please input first and last names for the Individual'))
 		tenant.tenant_name = ' '.join([tenant.first_name, tenant.last_name])
 
 
