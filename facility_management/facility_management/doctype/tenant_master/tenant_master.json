@@ -43,12 +43,14 @@
   {
    "fieldname": "first_name",
    "fieldtype": "Data",
-   "label": "First Name"
+   "label": "First Name",
+   "reqd": 1
   },
   {
    "fieldname": "last_name",
    "fieldtype": "Data",
-   "label": "Last Name"
+   "label": "Last Name",
+   "reqd": 1
   },
   {
    "fieldname": "tenant_name",
@@ -211,7 +213,7 @@
    "label": "CR No"
   }
  ],
- "modified": "2020-09-01 11:44:05.994192",
+ "modified": "2020-11-24 14:15:03.640858",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Tenant Master",
