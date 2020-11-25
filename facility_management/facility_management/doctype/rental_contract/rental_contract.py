@@ -6,20 +6,16 @@ from __future__ import unicode_literals
 import frappe
 from frappe import _, enqueue
 from frappe.model.document import Document
+from frappe.model.naming import make_autoname
 from frappe.utils.data import add_to_date, getdate, nowdate, now_datetime, get_first_day
 from facility_management.helpers import get_status, get_debit_to, set_invoice_created
 
 
 class RentalContract(Document):
 	def autoname(self):
-		posting_date = getdate(self.posting_date)
-		last_name = frappe.db.get_value('Tenant Master', self.tenant, 'last_name')
-		self.name = '-'.join([
-			last_name,
-			self.property,
-			posting_date.strftime('%m'),
-			posting_date.strftime('%y')
-		])
+		abbr = frappe.db.get_value("Real Estate Property", self.property_group, "abbr")
+		property_no = frappe.db.get_value("Property", self.property, "property_no")
+		self.name = make_autoname('-'.join([abbr, property_no, ".###"]), "", self)
 
 	def validate(self):
 		_validate_contract_dates(self)
