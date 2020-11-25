@@ -14,6 +14,7 @@
   "title",
   "property_type",
   "property_status",
+  "abbr",
   "sb_rental",
   "rental_status",
   "rental_frequency",
@@ -231,9 +232,14 @@
    "fieldname": "title",
    "fieldtype": "Data",
    "label": "Title"
+  },
+  {
+   "fieldname": "abbr",
+   "fieldtype": "Data",
+   "label": "Abbr"
   }
  ],
- "modified": "2020-08-18 13:14:39.848199",
+ "modified": "2020-11-25 16:31:43.673566",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Property",
