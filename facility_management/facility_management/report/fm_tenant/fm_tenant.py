@@ -71,6 +71,7 @@ def _get_data(filters):
         FROM `tabRental Contract` tr
         LEFT JOIN `tabTenant Master` t ON tr.tenant = t.name
         LEFT JOIN `tabProperty` p ON tr.property = p.name
+        WHERE tr.docstatus = 1
         """,
         as_dict=True,
     )
