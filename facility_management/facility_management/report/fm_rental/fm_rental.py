@@ -82,6 +82,7 @@ def _get_active_contracts():
                 rc.ewa_limit
             FROM `tabRental Contract` rc
             JOIN `tabTenant Master` tm ON rc.tenant = tm.name
+            WHERE rc.status = 'Active'
         """,
         as_dict=1,
     )
