@@ -81,5 +81,28 @@ def get_data():
                     'name': 'Property Maintenance'
                 }
             ]
+        },
+        {
+            'label': _('Key Reports'),
+            'items': [
+                {
+                    'type': 'report',
+                    'is_query_report': True,
+                    'name': 'FM Rental',
+                    'onboard': 1
+                },
+                {
+                    'type': 'report',
+                    'is_query_report': True,
+                    'name': 'FM Tenant',
+                    'onboard': 1
+                },
+                {
+                    'type': 'report',
+                    'is_query_report': True,
+                    'name': 'FM Property Details',
+                    'onboard': 1
+                }
+            ]
         }
     ]
