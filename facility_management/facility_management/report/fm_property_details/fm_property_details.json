@@ -7,8 +7,7 @@
  "doctype": "Report",
  "idx": 0,
  "is_standard": "Yes",
- "letter_head": "Main for All",
- "modified": "2020-12-04 16:58:15.983100",
+ "modified": "2020-12-09 17:33:36.449506",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "FM Property Details",
@@ -19,10 +18,10 @@
  "report_type": "Script Report",
  "roles": [
   {
-   "role": "System Manager"
+   "role": "Accounts User"
   },
   {
-   "role": "facility managemet"
+   "role": "Accounts Manager"
   }
  ]
 }

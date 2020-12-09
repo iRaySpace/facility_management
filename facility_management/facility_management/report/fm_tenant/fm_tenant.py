@@ -22,6 +22,7 @@ def _get_columns(filters):
 
     return [
         make_column("Name of the Property", "property_group", 180, "Link", "Real Estate Property"),
+        make_column("Property Type", "property_type", 130),
         make_column("Property Number", "property_no", 130),
         make_column("Tenant", "tenant", 280, "Link", "Tenant Master"),
         make_column("Address", "address", 250),
@@ -37,10 +38,26 @@ def _get_columns(filters):
     ]
 
 
+def _get_clauses(filters):
+    clauses = []
+    if filters.get("property_name"):
+        clauses.append("tr.property_group = %(property_name)s")
+    if filters.get("property_type"):
+        clauses.append("p.property_type = %(property_type)s")
+    if filters.get("property_no"):
+        clauses.append("p.property_no = %(property_no)s")
+    if filters.get("tenant"):
+        clauses.append("tr.tenant = %(tenant)s")
+    if filters.get("furnished"):
+        clauses.append("p.furnished = %(furnished)s")
+    return "".join([" AND ", " AND ".join(clauses)]) if clauses else ""
+
+
 def _get_data(filters):
     def make_data(renting):
         return {
             "property_group": renting.get("property_group"),
+            "property_type": renting.get("property_type"),
             "property_no": renting.get("property_no"),
             "tenant": renting.get("tenant"),
             "address": renting.get("property_floor"),
@@ -59,6 +76,7 @@ def _get_data(filters):
         """
         SELECT 
             tr.property_group,
+            p.property_type,
             p.property_no,
             tr.tenant,
             p.property_floor,
@@ -75,7 +93,9 @@ def _get_data(filters):
         LEFT JOIN `tabTenant Master` t ON tr.tenant = t.name
         LEFT JOIN `tabProperty` p ON tr.property = p.name
         WHERE tr.docstatus = 1
-        """,
+        {clauses}
+        """.format(clauses=_get_clauses(filters)),
+        filters,
         as_dict=True,
     )
 

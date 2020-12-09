@@ -7,7 +7,7 @@
  "doctype": "Report",
  "idx": 0,
  "is_standard": "Yes",
- "modified": "2020-08-18 13:30:58.382281",
+ "modified": "2020-12-09 17:32:43.571880",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "FM Tenant",
@@ -18,7 +18,10 @@
  "report_type": "Script Report",
  "roles": [
   {
-   "role": "System Manager"
+   "role": "Accounts User"
+  },
+  {
+   "role": "Accounts Manager"
   }
  ]
 }

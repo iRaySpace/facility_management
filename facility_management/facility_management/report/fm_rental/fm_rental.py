@@ -46,13 +46,31 @@ def _get_columns(filters):
 
 
 def _get_data(filters):
-    properties = _get_properties()
+    properties = _get_properties(filters)
     active_contracts = {x.get("property"): x for x in _get_active_contracts()}
     data = [merge(x, active_contracts.get(x.get("name"), {})) for x in properties]
+
+    tenant = filters.get("tenant")
+    if tenant:
+        data = list(filter(lambda x: x.get("tenant") == tenant, data))
+
     return data
 
 
-def _get_properties():
+def _get_property_clauses(filters):
+    clauses = filters.copy()
+    if clauses.get("tenant"):
+        del clauses["tenant"]
+    if clauses.get('property_name'):
+        clauses['property_group'] = clauses.get('property_name')
+        del clauses['property_name']
+    if clauses.get('status'):
+        clauses['rental_status'] = clauses.get('status')
+        del clauses['status']
+    return clauses
+
+
+def _get_properties(filters):
     return frappe.get_all(
         "Property",
         fields=[
@@ -64,6 +82,7 @@ def _get_properties():
             "rental_status",
             "furnished",
         ],
+        filters=_get_property_clauses(filters)
     )
 
 
