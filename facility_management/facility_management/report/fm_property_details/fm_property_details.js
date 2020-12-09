@@ -31,7 +31,7 @@ frappe.query_reports["FM Property Details"] = {
           fieldname: 'status',
           label: __('Status'),
           fieldtype: 'Select',
-          options: 'Vacant\nRented'
+          options: '\nVacant\nRented'
         },
 	]
 };
