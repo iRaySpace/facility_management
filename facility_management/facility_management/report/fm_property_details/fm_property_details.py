@@ -33,11 +33,25 @@ def _get_columns(filters):
 
 
 def _get_data(filters):
-    properties = _get_properties()
+    properties = _get_properties(filters)
     return properties
 
 
-def _get_properties():
+def _get_clauses(filters):
+    clauses = filters
+    if clauses.get('property'):
+        clauses['name'] = clauses.get('property')
+        del clauses['property']
+    if clauses.get('property_name'):
+        clauses['property_group'] = clauses.get('property_name')
+        del clauses['property_name']
+    if clauses.get('status'):
+        clauses['rental_status'] = clauses.get('status')
+        del clauses['status']
+    return clauses
+
+
+def _get_properties(filters):
     return frappe.get_all(
         "Property",
         fields=[
@@ -48,4 +62,5 @@ def _get_properties():
             "property_floor as property_addr",
             "rental_status as status",
         ],
+        filters=_get_clauses(filters)
     )
