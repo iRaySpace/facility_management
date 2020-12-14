@@ -4,6 +4,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "tenant_naming_by",
   "rental_item",
   "column_break_2",
   "invoice_on_start_date",
@@ -41,10 +42,16 @@
    "fieldname": "retain_rental_on_cancel",
    "fieldtype": "Check",
    "label": "Retain Rental on Cancel"
+  },
+  {
+   "fieldname": "tenant_naming_by",
+   "fieldtype": "Select",
+   "label": "Tenant Naming By",
+   "options": "Tenant Name\nNaming Series"
   }
  ],
  "issingle": 1,
- "modified": "2020-07-28 17:03:46.321280",
+ "modified": "2020-12-14 14:43:00.071479",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Facility Management Settings",
