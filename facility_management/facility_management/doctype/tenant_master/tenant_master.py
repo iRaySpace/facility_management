@@ -15,6 +15,10 @@ class TenantMaster(Document):
 		info = get_dashboard_info('Customer', self.customer)
 		self.set_onload('dashboard_info', info)
 
+	def autoname(self):
+		if frappe.db.get_single_value("Facility Management Settings", "tenant_naming_by") == "Tenant Name":
+			self.name = self.tenant_name
+
 	def after_rename(self, old, new, merge):
 		if self.customer:
 			rename_doc('Customer', self.customer, new)

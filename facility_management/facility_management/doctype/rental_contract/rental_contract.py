@@ -14,7 +14,13 @@ from facility_management.helpers import get_status, get_debit_to, set_invoice_cr
 class RentalContract(Document):
     def autoname(self):
         abbr = frappe.db.get_value("Real Estate Property", self.property_group, "abbr")
+        if not abbr:
+            frappe.throw(_(f"Please set the abbreviation of the Real Estate Property {self.property_group}"))
+
         property_no = frappe.db.get_value("Property", self.property, "property_no")
+        if not property_no:
+            frappe.throw(_(f"Please set the property no of the Property {self.property}"))
+
         self.name = make_autoname("-".join([abbr, property_no, ".###"]), "", self)
 
     def validate(self):
