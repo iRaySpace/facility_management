@@ -1,11 +1,12 @@
 {
  "allow_rename": 1,
- "autoname": "field:tenant_name",
+ "autoname": "naming_series:",
  "creation": "2020-02-17 20:49:10.137856",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "naming_series",
   "first_name",
   "last_name",
   "tenant_name",
@@ -209,9 +210,15 @@
    "fieldname": "cr_no",
    "fieldtype": "Data",
    "label": "CR No"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "TEN-"
   }
  ],
- "modified": "2020-11-24 14:19:22.891652",
+ "modified": "2020-12-14 14:46:06.578162",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Tenant Master",
@@ -233,5 +240,6 @@
  "search_fields": "tenant_name,mobile_no,mobile_no_2,email,cpr",
  "sort_field": "modified",
  "sort_order": "DESC",
+ "title_field": "tenant_name",
  "track_changes": 1
 }
