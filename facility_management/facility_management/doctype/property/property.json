@@ -14,6 +14,7 @@
   "title",
   "property_type",
   "property_status",
+  "landlord",
   "sb_rental",
   "rental_status",
   "rental_frequency",
@@ -231,9 +232,15 @@
    "fieldname": "title",
    "fieldtype": "Data",
    "label": "Title"
+  },
+  {
+   "fieldname": "landlord",
+   "fieldtype": "Link",
+   "label": "Landlord",
+   "options": "Landlord"
   }
  ],
- "modified": "2020-11-25 16:46:26.339029",
+ "modified": "2020-12-16 17:40:44.145570",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Property",

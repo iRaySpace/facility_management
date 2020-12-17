@@ -1,0 +1,48 @@
+{
+ "autoname": "field:landlord_name",
+ "creation": "2020-12-16 17:39:01.332715",
+ "doctype": "DocType",
+ "editable_grid": 1,
+ "engine": "InnoDB",
+ "field_order": [
+  "landlord_name",
+  "cpr"
+ ],
+ "fields": [
+  {
+   "fieldname": "landlord_name",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Landlord Name",
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "cpr",
+   "fieldtype": "Data",
+   "label": "CPR"
+  }
+ ],
+ "modified": "2020-12-16 17:39:34.429304",
+ "modified_by": "Administrator",
+ "module": "Facility Management",
+ "name": "Landlord",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "track_changes": 1
+}
