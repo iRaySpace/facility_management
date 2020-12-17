@@ -30,6 +30,25 @@ def get_customer(tenant_renting):
     return frappe.db.get_value("Tenant Master", tenant, "customer")
 
 
+def get_landlord_details(property):
+    landlord = frappe.db.get_value("Property", property, "landlord")
+    cpr = frappe.db.get_value("Landlord", landlord, "cpr")
+    return {"name": landlord, "cpr": cpr}
+
+
+def get_tenant_details(tenant):
+    tenant_details = frappe.db.sql(
+        """
+            SELECT tenant_name, cpr, passport_no
+            FROM `tabTenant Master`
+            WHERE name = %(tenant)s
+        """,
+        {"tenant": tenant},
+        as_dict=1,
+    )
+    return tenant_details[0] if tenant_details else None
+
+
 def _get_rental_properties():
     return frappe.db.sql(
         """
@@ -40,7 +59,7 @@ def _get_rental_properties():
             FROM `tabProperty` p
             WHERE p.property_status = 'Rental'
         """,
-        as_dict=True
+        as_dict=True,
     )
 
 
