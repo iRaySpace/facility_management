@@ -29,17 +29,28 @@ frappe.ui.form.on('Real Estate Property', {
 function _set_dashboard_indicators(frm) {
   if (frm.doc.__onload && frm.doc.__onload.dashboard_info) {
     const info = frm.doc.__onload.dashboard_info;
-    frm.dashboard.add_indicator(
-      __('Total Rented: {0}', [info.rented]),
-      'orange',
-    );
+    frm.dashboard.add_indicator(__('Total Rented: {0}', [info.rented]), 'blue');
     frm.dashboard.add_indicator(
       __('Total Vacant: {0}', [info.vacant]),
       'orange',
     );
     frm.dashboard.add_indicator(
       __('Total Properties: {0}', [info.properties]),
+      'green',
+    );
+    frm.dashboard.add_indicator('', '');
+    frm.dashboard.add_indicator(
+      __('Total Paid: {0}', [format_currency(info.total_paid)]),
       'blue',
     );
+    frm.dashboard.add_indicator(
+      __('Total Unpaid: {0}', [format_currency(info.total_unpaid)]),
+      'orange',
+    );
+    frm.dashboard.add_indicator(
+      __('Total Rent: {0}', [format_currency(info.total_rent)]),
+      'green',
+    );
+    $('.indicator-column').css('margin', '.25em 0');
   }
 }
