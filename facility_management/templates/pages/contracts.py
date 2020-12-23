@@ -22,25 +22,6 @@ def _get_contracts(tenant):
     )
 
 
-def _get_contract(name):
-    return frappe.get_value(
-        "Rental Contract",
-        name,
-        [
-            "name",
-            "property",
-            "status",
-            "contract_start_date",
-            "contract_end_date",
-            "deposit_amount",
-            "rental_frequency",
-            "rental_amount",
-            "ewa_limit",
-        ],
-        as_dict=1,
-    )
-
-
 def _get_customer(user):
     customer = frappe.db.sql(
         """
