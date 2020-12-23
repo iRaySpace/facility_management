@@ -50,7 +50,7 @@ function _set_custom_buttons(frm) {
 }
 
 async function _set_tenant_details(frm) {
-    const tenant = await frappe.db.get_doc('Tenant', frm.doc.tenant);
+    const tenant = await frappe.db.get_doc('Tenant Master', frm.doc.tenant);
     frm.set_value('tenant_name', `${tenant.first_name} ${tenant.last_name}`);
     frm.set_value('email', tenant.email);
 }
