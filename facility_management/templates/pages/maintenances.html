@@ -1,0 +1,86 @@
+{% extends "templates/web.html" %}
+{% block header %}
+  <h1>Maintenances</h1>
+{% endblock %}
+
+{% block style %}
+  <style>
+    .field-group {
+      margin-bottom: 15px;
+    }
+  </style>
+{% endblock %}
+
+{% block page_content %}
+
+{% if row %}
+  <div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="field-group">
+          <div class="small text-muted">Issue Type</div>
+          <div>{{ row.issue_type }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Property</div>
+          <div>{{ row.property }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Description</div>
+          <div>{{ row.issue_description }}</div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="field-group">
+          <div class="small text-muted">Status</div>
+          <div>{{ row.status }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Raised on</div>
+          <div>{{ row.raised_on }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Assigned To</div>
+          <div>{{ row.assigned_to }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Ticket Priority</div>
+          <div>{{ row.ticket_priority }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if data %}
+<div class="result">
+  {% for row in data %}
+  <div class="web-list-item transaction-list-item">
+    <div class="row">
+      <div class="col-sm-6">
+        <span class="indicator small blue"> {{ row.name }} </span>
+        <div class="small text-muted">{{ row.raised_on }}</div>
+      </div>
+      <div class="col-sm-2">
+        <div class="text-muted">{{ row.status }}</div>
+      </div>
+      <div class="col-sm-2">
+        <div class="text-muted">{{ row.issue_type }}</div>
+      </div>
+      <div class="col-sm-2">
+        <div class="text-muted">{{ row.property }}</div>
+      </div>
+    </div>
+    <a
+      class="transaction-item-link"
+      href="/maintenances?name={{ row.name }}"
+      >Link</a
+    >
+  </div>
+  {% endfor %}
+</div>
+{% elif not row %}
+<p class="text-muted">{{ _("No Maintenances") }}</p>
+{% endif %}
+
+{% endblock %}
