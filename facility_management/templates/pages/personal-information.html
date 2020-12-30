@@ -1,0 +1,151 @@
+{% extends "templates/web.html" %}
+
+{% block style %}
+  <style>
+    .field-group {
+      margin-bottom: 15px;
+    }
+    .page-header {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+{% endblock %}
+
+{% block header %}
+  <h1>Personal Information</h1>
+  <div class="btn-group">
+    <button class="btn btn-primary btn-edit" type="button">
+      {{ _("Edit") }}
+    </button>
+  </div>
+{% endblock %}
+
+{% block page_content %}
+  <div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="field-group">
+          <div class="small text-muted">First Name</div>
+          <div>{{ data.first_name }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Last Name</div>
+          <div>{{ data.last_name }}</div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="field-group">
+          <div class="small text-muted">Type</div>
+          <div>{{ data.tenant_type }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Gender</div>
+          <div>{{ data.gender }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="row contact">
+      <div class="col-sm-6">
+        <div class="field-group">
+          <div class="small text-muted">CPR</div>
+          <div>{{ data.cpr }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">CPR Expiry Date</div>
+          <div>{{ data.cpr_expiry_date }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Passport No</div>
+          <div>{{ data.passport_no }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Passport Expiry Date</div>
+          <div>{{ data.passport_expiry_date }}</div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="field-group">
+          <div class="small text-muted">Emergency Contact Name</div>
+          <div>{{ data.emergency_contact_name }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Relationship</div>
+          <div>{{ data.relationship }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Mobile Number</div>
+          <div>{{ data.mobile_no }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Mobile Number 2</div>
+          <div>{{ data.mobile_no_2 }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Office Number</div>
+          <div>{{ data.office_no }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Email Address</div>
+          <div>{{ data.email }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="row employer">
+      <div class="col-sm-6">
+        <div class="field-group">
+          <div class="small text-muted">Employer Name</div>
+          <div>{{ data.employer_name }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Flat/Villa No</div>
+          <div>{{ data.flat_villa_no }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Bldg Name</div>
+          <div>{{ data.bldg_name }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Road No</div>
+          <div>{{ data.road_no }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Road Name</div>
+          <div>{{ data.road_name }}</div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="field-group">
+          <div class="small text-muted">Block No</div>
+          <div>{{ data.block_no }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Area</div>
+          <div>{{ data.area }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">City</div>
+          <div>{{ data.city }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Country</div>
+          <div>{{ data.country }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block base_scripts %}
+  <!-- js should be loaded in body! -->
+  <script type="text/javascript" src="/assets/frappe/js/lib/jquery/jquery.min.js"></script>
+  <script type="text/javascript" src="/assets/js/frappe-web.min.js"></script>
+  <script type="text/javascript" src="/assets/js/erpnext-web.min.js"></script>
+  <script type="text/javascript" src="/assets/js/control.min.js"></script>
+  <script type="text/javascript" src="/assets/js/dialog.min.js"></script>
+  <script type="text/javascript" src="/assets/js/moment-bundle.min.js"></script>
+  <script type="text/javascript" src="/assets/js/web_form.min.js"></script>
+  <script type="text/javascript" src="/assets/js/bootstrap-4-web.min.js"></script>
+{% endblock %}
