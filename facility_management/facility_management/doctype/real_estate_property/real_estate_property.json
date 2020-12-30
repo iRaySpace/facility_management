@@ -128,11 +128,12 @@
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Naming Series",
    "options": "REP-.###"
   }
  ],
- "modified": "2020-12-30 16:31:09.136498",
+ "modified": "2020-12-30 16:46:24.972746",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Real Estate Property",
