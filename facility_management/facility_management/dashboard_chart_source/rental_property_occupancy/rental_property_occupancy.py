@@ -69,4 +69,4 @@ def _get_clauses(filters):
     clauses = []
     if filters.get('property_group'):
         clauses.append('property_group = %(property_group)s')
-    return concat_not_empty(' AND ', ' AND '.join(clauses))
+    return concat_not_empty(' AND ', ' AND '.join(clauses)) or ''
