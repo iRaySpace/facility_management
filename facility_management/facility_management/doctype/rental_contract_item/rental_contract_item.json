@@ -7,8 +7,7 @@
   "invoice_date",
   "description",
   "is_invoice_created",
-  "invoice_ref",
-  "status"
+  "invoice_ref"
  ],
  "fields": [
   {
@@ -38,16 +37,10 @@
    "label": "Invoice Reference",
    "options": "Sales Invoice",
    "read_only": 1
-  },
-  {
-   "fieldname": "status",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Status"
   }
  ],
  "istable": 1,
- "modified": "2020-12-30 16:45:42.890052",
+ "modified": "2020-12-30 17:03:21.377488",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Rental Contract Item",
