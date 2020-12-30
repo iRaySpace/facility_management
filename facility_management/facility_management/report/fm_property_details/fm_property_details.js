@@ -2,13 +2,24 @@
 // For license information, please see license.txt
 /* eslint-disable */
 
-frappe.query_reports["FM Rental"] = {
+frappe.query_reports["FM Property Details"] = {
 	"filters": [
+        {
+          fieldname: 'property',
+          label: __('Property'),
+          fieldtype: 'Link',
+          options: 'Property',
+        },
         {
           fieldname: 'property_name',
           label: __('Name of the Property'),
           fieldtype: 'Link',
           options: 'Real Estate Property',
+        },
+        {
+          fieldname: 'property_no',
+          label: __('Property Number'),
+          fieldtype: 'Data',
         },
         {
           fieldname: 'property_type',
@@ -17,21 +28,10 @@ frappe.query_reports["FM Rental"] = {
           options: '\nApartment\nVilla\nShop\nOffice',
         },
         {
-          fieldname: 'property_no',
-          label: __('Property Number'),
-          fieldtype: 'Data',
-        },
-        {
           fieldname: 'status',
           label: __('Status'),
           fieldtype: 'Select',
           options: '\nVacant\nRented'
         },
-        {
-          fieldname: 'tenant',
-          label: __('Tenant'),
-          fieldtype: 'Link',
-          options: 'Tenant Master',
-        },
 	]
-}
+};

@@ -7,7 +7,7 @@
  "doctype": "Report",
  "idx": 0,
  "is_standard": "Yes",
- "modified": "2020-08-18 13:30:48.445257",
+ "modified": "2020-12-09 17:32:58.865466",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "FM Rental",
@@ -18,7 +18,10 @@
  "report_type": "Script Report",
  "roles": [
   {
-   "role": "System Manager"
+   "role": "Accounts User"
+  },
+  {
+   "role": "Accounts Manager"
   }
  ]
 }

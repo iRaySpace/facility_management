@@ -4,68 +4,104 @@
 from __future__ import unicode_literals
 import frappe
 from frappe import _
-from frappe.utils.data import nowdate
+from toolz import merge
 
 
 def execute(filters=None):
-	columns, data = _get_columns(filters), _get_data(filters)
-	return columns, data
+    columns, data = _get_columns(filters), _get_data(filters)
+    return columns, data
 
 
 def _get_columns(filters):
-	def make_column(label, fieldname, width, fieldtype='Data', options=''):
-		return {
-			'label': _(label),
-			'fieldname': fieldname,
-			'width': width,
-			'fieldtype': fieldtype,
-			'options': options
-		}
+    def make_column(label, fieldname, width, fieldtype="Data", options=""):
+        return {
+            "label": _(label),
+            "fieldname": fieldname,
+            "width": width,
+            "fieldtype": fieldtype,
+            "options": options,
+        }
 
-	return [
-		make_column('Property Name', 'property_name', 130),
-		make_column('Property', 'property', 180, 'Link', 'Property'),
-		make_column('Property Type', 'property_type', 110),
-		make_column('Is Occupied', 'is_occupied', 80, 'Check')
-	]
+    return [
+        make_column(
+            "Real Estate Property",
+            "property_group",
+            180,
+            "Link",
+            "Real Estate Property",
+        ),
+        make_column("Property Type", "property_type", 110),
+        make_column("Property No", "property_no", 130),
+        make_column("Floor Number", "property_floor", 250),
+        make_column("Furnished", "furnished", 130, "Data"),
+        make_column("Status", "rental_status", 130),
+        make_column("Tenant Name", "tenant", 180, "Link", "Tenant Master"),
+        make_column("Contact No", "mobile_no", 180),
+        make_column("Contract Start Date", "contract_start_date", 180, "Date"),
+        make_column("Contract End Date", "contract_end_date", 180, "Date"),
+        make_column("Rental Amount", "rental_amount", 130, "Currency"),
+        make_column("EWA Limit", "ewa_limit", 130, "Currency"),
+        make_column("Security Amount", "deposit_amount", 130, "Currency"),
+    ]
 
 
 def _get_data(filters):
-	def make_data(rental):
-		name = rental.get('name')
-		return {
-			'property': name,
-			'property_name': rental.get('title'),
-			'property_type': rental.get('property_type'),
-			'is_occupied': name in rented_properties
-		}
-	rented_properties = _get_rented_properties()
-	return list(map(make_data, _get_rental_properties()))
+    properties = _get_properties(filters)
+    active_contracts = {x.get("property"): x for x in _get_active_contracts()}
+    data = [merge(x, active_contracts.get(x.get("name"), {})) for x in properties]
+
+    tenant = filters.get("tenant")
+    if tenant:
+        data = list(filter(lambda x: x.get("tenant") == tenant, data))
+
+    return data
 
 
-def _get_rental_properties():
-	return frappe.db.sql("""
-		SELECT
-			p.name,
-			p.title,
-			p.property_type
-		FROM `tabProperty` p
-		WHERE p.property_status = 'Rental'
-	""", as_dict=True)
+def _get_property_clauses(filters):
+    clauses = filters.copy()
+    if clauses.get("tenant"):
+        del clauses["tenant"]
+    if clauses.get('property_name'):
+        clauses['property_group'] = clauses.get('property_name')
+        del clauses['property_name']
+    if clauses.get('status'):
+        clauses['rental_status'] = clauses.get('status')
+        del clauses['status']
+    return clauses
 
 
-def _get_rented_properties():
-	def make_data(tenant_renting):
-		return tenant_renting.get('property')
+def _get_properties(filters):
+    return frappe.get_all(
+        "Property",
+        fields=[
+            "name",
+            "property_group",
+            "property_type",
+            "property_no",
+            "property_floor",
+            "rental_status",
+            "furnished",
+        ],
+        filters=_get_property_clauses(filters)
+    )
 
-	return list(
-		map(
-			make_data,
-			frappe.db.sql("""
-				SELECT property 
-				FROM `tabRental Contract`
-				WHERE %s
-				BETWEEN contract_start_date AND contract_end_date
-			""", nowdate(), as_dict=True)
-		)
-	)
+
+def _get_active_contracts():
+    return frappe.db.sql(
+        """
+            SELECT
+                rc.tenant,
+                tm.mobile_no,
+                rc.property,
+                rc.contract_start_date,
+                rc.contract_end_date,
+                rc.deposit_amount,
+                rc.rental_frequency,
+                rc.rental_amount,
+                rc.ewa_limit
+            FROM `tabRental Contract` rc
+            JOIN `tabTenant Master` tm ON rc.tenant = tm.name
+            WHERE rc.status = 'Active'
+        """,
+        as_dict=1,
+    )

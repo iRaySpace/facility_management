@@ -1,0 +1,84 @@
+{% extends "templates/web.html" %}
+
+{% block header %}
+  <h1>Violations</h1>
+{% endblock %}
+
+{% block style %}
+  <style>
+    .field-group { margin-bottom: 15px; }
+  </style>
+{% endblock %}
+
+{% block page_content %}
+
+{% if violation %}
+  <div>
+    <div class="row details">
+      <div class="col-sm-6">
+        <div class="field-group">
+          <div class="small text-muted">Property</div>
+          <div>{{ violation.property }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Category</div>
+          <div>{{ violation.category }}</div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="field-group">
+          <div class="small text-muted">Stage</div>
+          <div>{{ violation.stage }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Posting Date</div>
+          <div>{{ violation.posting_date }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Deadline Date</div>
+          <div>{{ violation.deadline_date }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="row description">
+      <div class="col-sm-12">
+        <div class="field-group">
+          <div class="small text-muted">Description</div>
+          <div>{{ violation.description }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Required Tenant Action</div>
+          <div>{{ violation.required_owner_action }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if violations %}
+  <div class="result">
+    {% for violation in violations %}
+      <div class="web-list-item transaction-list-item">
+        <div class="row">
+          <div class="col-sm-6">
+            <span class="indicator small blue">
+              {{ violation.name }}
+            </span>
+            <div class="small text-muted">{{ violation.posting_date }}</div>
+          </div>
+          <div class="col-sm-2">
+            <div class="text-muted">{{ violation.stage }}</div>
+          </div>
+          <div class="col-sm-4">
+            <div class="text-muted">{{ violation.category }}</div>
+          </div>
+        </div>
+        <a class="transaction-item-link" href="/violations?name={{ violation.name }}">Link</a>
+      </div>
+    {% endfor %}
+  </div>
+{% elif not violation %}
+  <p class="text-muted">{{ _("No Violations") }}</p>
+{% endif %}
+
+{% endblock %}

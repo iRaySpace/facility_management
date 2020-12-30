@@ -10,6 +10,10 @@ from frappe.utils import now
 
 
 class PropertyMaintenance(Document):
+	def validate(self):
+		if not self.created_by:
+			self.created_by = frappe.session.user
+
 	def close_issue(self):
 		self.status = 'Closed'
 		self.append('items', {

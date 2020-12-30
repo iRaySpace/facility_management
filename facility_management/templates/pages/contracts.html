@@ -1,0 +1,84 @@
+{% extends "templates/web.html" %}
+
+{% block header %}
+  <h1>Contracts</h1>
+{% endblock %}
+
+{% block style %}
+  <style>
+    .field-group { margin-bottom: 15px; }
+  </style>
+{% endblock %}
+
+{% block page_content %}
+
+{% if contract %}
+  <div>
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="field-group">
+          <div class="small text-muted">Property</div>
+          <div>{{ contract.property }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Contract Start</div>
+          <div>{{ contract.contract_start_date }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Contract End</div>
+          <div>{{ contract.contract_end_date }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Rental Frequency</div>
+          <div>{{ contract.rental_frequency }}</div>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="field-group">
+          <div class="small text-muted">Status</div>
+          <div>{{ contract.status }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Deposit Amount</div>
+          <div>{{ contract.get_formatted("deposit_amount") }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">EWA Limit</div>
+          <div>{{ contract.get_formatted("ewa_limit") }}</div>
+        </div>
+        <div class="field-group">
+          <div class="small text-muted">Rental Amount</div>
+          <div>{{ contract.get_formatted("rental_amount") }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+{% if contracts %}
+  <div class="result">
+    {% for contract in contracts %}
+      <div class="web-list-item transaction-list-item">
+        <div class="row">
+          <div class="col-sm-6">
+            <span class="indicator small blue">
+              {{ contract.name }}
+            </span>
+            <div class="small text-muted">{{ contract.posting_date }}</div>
+          </div>
+          <div class="col-sm-2">
+            <div class="text-muted">{{ contract.status }}</div>
+          </div>
+          <div class="col-sm-4">
+            <div class="text-muted">{{ contract.property }}</div>
+          </div>
+        </div>
+        <a class="transaction-item-link" href="/contracts?name={{ contract.name }}">Link</a>
+      </div>
+    {% endfor %}
+  </div>
+{% elif not contract %}
+  <p class="text-muted">{{ _("No Rental Contracts") }}</p>
+{% endif %}
+
+{% endblock %}
