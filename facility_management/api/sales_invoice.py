@@ -1,3 +1,4 @@
+import json
 import frappe
 
 
@@ -18,3 +19,14 @@ def get_property_details(rental_contract):
             'property_group': property_group
         }
     return None
+
+
+@frappe.whitelist()
+def get_statuses(invoices):
+    invoices = json.loads(invoices)
+    data = frappe.get_all(
+        "Sales Invoice",
+        fields=["name", "status"],
+        filters=[["name", "in", invoices]]
+    )
+    return {x.get("name"): x.get("status") for x in data}

@@ -15,6 +15,7 @@ frappe.ui.form.on('Rental Contract', {
     _add_payment_entry(frm);
     _add_cancel_btn(frm);
     _set_items_read_only(frm);
+    _set_status(frm);
   },
   contract_start_date: function (frm) {
     _set_start_invoice_date(frm);
@@ -86,4 +87,23 @@ function _set_start_invoice_date(frm) {
 
 function _set_items_read_only(frm) {
   frm.set_df_property('items', 'read_only', 1);
+}
+
+async function _set_status(frm) {
+  const created_invoices = frm.doc.items.filter((item) => item.is_invoice_created);
+  const invoices = created_invoices.map((created_invoice) => created_invoice.invoice_ref);
+  const statuses = await _get_statuses(invoices);
+  created_invoices.forEach((invoice) => {
+    const status = statuses[invoice.invoice_ref];
+    invoice.description = `${invoice.description} - ${status}`;
+  });
+  frm.refresh_fields();
+}
+
+async function _get_statuses(invoices) {
+  const { message: response } = await frappe.call({
+    method: "facility_management.api.sales_invoice.get_statuses",
+    args: { invoices },
+  });
+  return response;
 }
