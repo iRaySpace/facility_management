@@ -1,11 +1,12 @@
 {
  "allow_rename": 1,
- "autoname": "field:property_name",
+ "autoname": "naming_series:",
  "creation": "2020-02-17 20:15:12.118014",
  "doctype": "DocType",
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "naming_series",
   "property_name",
   "abbr",
   "address_line_1",
@@ -123,9 +124,15 @@
    "fieldname": "abbr",
    "fieldtype": "Data",
    "label": "Abbr"
+  },
+  {
+   "fieldname": "naming_series",
+   "fieldtype": "Select",
+   "label": "Naming Series",
+   "options": "REP-.###"
   }
  ],
- "modified": "2020-11-25 16:43:56.949131",
+ "modified": "2020-12-30 16:31:09.136498",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Real Estate Property",
