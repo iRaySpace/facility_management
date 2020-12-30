@@ -47,6 +47,7 @@
   {
    "fieldname": "naming_series",
    "fieldtype": "Select",
+   "hidden": 1,
    "label": "Naming Series",
    "options": "PU-.#####"
   },
@@ -240,7 +241,7 @@
    "options": "Landlord"
   }
  ],
- "modified": "2020-12-30 16:31:19.394198",
+ "modified": "2020-12-30 16:40:37.864496",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Property",
