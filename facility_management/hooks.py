@@ -161,6 +161,7 @@ scheduler_events = {
 jenv = {
     "methods": [
         "get_landlord_details:facility_management.api.tenant_renting.get_landlord_details",
-        "get_tenant_details:facility_management.api.tenant_renting.get_tenant_details"
+        "get_tenant_details:facility_management.api.tenant_renting.get_tenant_details",
+        "get_property_name:facility_management.api.property.get_property_name"
     ]
 }
