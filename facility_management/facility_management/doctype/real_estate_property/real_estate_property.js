@@ -11,6 +11,7 @@ frappe.ui.form.on('Real Estate Property', {
   },
   refresh: function (frm) {
     _set_dashboard_indicators(frm);
+    _set_dashboard_charts(frm);
   },
   insured: function (frm) {
     // TODO: commons
@@ -52,5 +53,29 @@ function _set_dashboard_indicators(frm) {
       'green',
     );
     $('.indicator-column').css('margin', '.25em 0');
+  }
+}
+
+function _set_dashboard_charts(frm) {
+  if (frm.doc.__onload && frm.doc.__onload.dashboard_info) {
+    const info = frm.doc.__onload.dashboard_info;
+    const data = {
+      labels: ['Total Paid', 'Total Unpaid', 'Total Rent'],
+      datasets: [
+        { values: [info.total_paid, info.total_unpaid, info.total_rent] },
+      ],
+    };
+
+    // from frm.dashboard.render_graph()
+    frm.dashboard.chart_area.empty().removeClass('hidden');
+    frm.dashboard.show();
+    frm.dashboard.chart = new frappe.Chart('.form-graph', {
+      type: 'bar',
+      colors: ['green'],
+      data: data,
+    });
+    if (!frm.dashboard.chart) {
+      frm.dashboard.hide();
+    }
   }
 }
