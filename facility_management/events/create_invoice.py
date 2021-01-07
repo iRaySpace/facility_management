@@ -2,6 +2,7 @@ import frappe
 from frappe import _dict
 from frappe.utils.data import today, get_first_day, get_last_day
 from facility_management.helpers import set_invoice_created
+from facility_management.utils.rental_contract import make_description
 
 
 # TODO: remove unused codes
@@ -59,12 +60,20 @@ def execute(**kwargs):
             },
         )
         invoice.set_missing_values()
+
+        name = tenant_due.get("name")
+        tenant_property = tenant_due.get("property")
+        invoice.remarks = make_description({
+            "posting_date": invoice.posting_date,
+            "property": tenant_property,
+            "rental_contract": name
+        })
         invoice.save()
 
         if submit_si:
             invoice.submit()
 
-        set_invoice_created(tenant_due.get("name"), invoice.name)
+        set_invoice_created(name, invoice.name)
 
 
 def _get_tenant_dues(filters):
@@ -82,7 +91,8 @@ def _get_tenant_dues(filters):
                 rci.parent,
                 rc.rental_amount,
                 rc.advance_paid_amount,
-                rc.tenant
+                rc.tenant,
+                rc.property
             FROM `tabRental Contract Item` rci
             INNER JOIN `tabRental Contract` rc
             ON rci.parent = rc.name

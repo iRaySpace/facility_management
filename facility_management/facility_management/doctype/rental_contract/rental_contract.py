@@ -9,6 +9,7 @@ from frappe.model.document import Document
 from frappe.model.naming import make_autoname
 from frappe.utils.data import add_to_date, getdate, nowdate, now_datetime, get_first_day
 from facility_management.helpers import get_status, get_debit_to, set_invoice_created
+from facility_management.utils.rental_contract import make_description
 
 
 class RentalContract(Document):
@@ -141,6 +142,12 @@ def _generate_invoices_now(renting):
         invoice.update(invoice_data)
         invoice.append("items", items[0])
         invoice.set_missing_values()
+        invoice.remarks = make_description({
+            "posting_date": invoice.posting_date,
+            "property": renting.property,
+            "rental_contract": renting.name
+        })
+
         invoice.save()
 
         if submit_si:
