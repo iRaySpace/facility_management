@@ -11,9 +11,15 @@ from toolz import pluck, merge
 
 class RealEstateProperty(Document):
     def onload(self):
-        property_status = _get_property_status(self.name)
-        property_rent = _get_property_rent(self.name)
-        self.set_onload("dashboard_info", merge(property_status, property_rent))
+        self.set_onload(
+            "dashboard_info",
+            merge(
+                _get_property_status(self.name),
+                _get_property_rent(self.name),
+                _get_expected_rent(self.name),
+                _get_rent_actual(self.name),
+            ),
+        )
 
     def validate(self):
         _validate_abbr(self)
@@ -78,3 +84,32 @@ def _get_property_rent(property_group):
         "total_unpaid": outstanding_amounts,
         "total_rent": grand_totals,
     }
+
+
+def _get_expected_rent(property_group):
+    data = frappe.db.sql(
+        """
+            SELECT rental_amount
+            FROM `tabRental Contract`
+            WHERE property_group = %s
+            AND status = "Active"
+        """,
+        property_group,
+        as_dict=1,
+    )
+
+    return {"total_expected_rent": sum(pluck("rental_amount", data))}
+
+
+def _get_rent_actual(property_group):
+    data = frappe.db.sql(
+        """
+            SELECT rental_rate
+            FROM `tabProperty`
+            WHERE property_group = %s
+        """,
+        property_group,
+        as_dict=1,
+    )
+
+    return {"total_rent_actual": sum(pluck("rental_rate", data))}

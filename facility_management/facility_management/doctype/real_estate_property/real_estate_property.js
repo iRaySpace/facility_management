@@ -39,7 +39,10 @@ function _set_dashboard_indicators(frm) {
       __('Total Properties: {0}', [info.properties]),
       'green',
     );
-    frm.dashboard.add_indicator('', '');
+    frm.dashboard.add_indicator(
+      __('Expected Rent: {0}', [format_currency(info.total_expected_rent)]),
+      'orange',
+    );
     frm.dashboard.add_indicator(
       __('Total Paid: {0}', [format_currency(info.total_paid)]),
       'blue',
@@ -52,6 +55,10 @@ function _set_dashboard_indicators(frm) {
       __('Total Rent: {0}', [format_currency(info.total_rent)]),
       'green',
     );
+    frm.dashboard.add_indicator(
+      __('Rent Actual: {0}', [format_currency(info.total_rent_actual)]),
+      'orange',
+    );
     $('.indicator-column').css('margin', '.25em 0');
   }
 }
@@ -60,9 +67,9 @@ function _set_dashboard_charts(frm) {
   if (frm.doc.__onload && frm.doc.__onload.dashboard_info) {
     const info = frm.doc.__onload.dashboard_info;
     const data = {
-      labels: ['Total Paid', 'Total Unpaid', 'Total Rent'],
+      labels: ['Total Paid', 'Total Unpaid', 'Total Rent', 'Total Expected Rent', 'Total Rent Actual'],
       datasets: [
-        { values: [info.total_paid, info.total_unpaid, info.total_rent] },
+        { values: [info.total_paid, info.total_unpaid, info.total_rent, info.total_expected_rent, info.total_rent_actual] },
       ],
     };
 
