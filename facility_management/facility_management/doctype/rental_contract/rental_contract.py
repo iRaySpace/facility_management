@@ -10,6 +10,7 @@ from frappe.model.naming import make_autoname
 from frappe.utils.data import add_to_date, getdate, nowdate, now_datetime, get_first_day
 from facility_management.helpers import get_status, get_debit_to, set_invoice_created
 from facility_management.utils.rental_contract import make_description
+from toolz import first
 
 
 class RentalContract(Document):
@@ -27,7 +28,7 @@ class RentalContract(Document):
     def validate(self):
         _validate_contract_dates(self)
         _validate_property(self)
-        if not self.items:
+        if not self.items or _updated_start_invoice_date(self):
             self.update({"items": _generate_items(self)})
         _set_status(self)
 
@@ -71,6 +72,14 @@ def _validate_property(renting):
     rental_status = frappe.db.get_value("Property", renting.property, "rental_status")
     if rental_status == "Rented":
         frappe.throw(_("Please make choose unoccupied property."))
+
+
+def _updated_start_invoice_date(renting):
+    if not renting.items:
+        return
+    first_item = first(renting.items)
+    if first_item.invoice_date != renting.start_invoice_date:
+        return True
 
 
 def _generate_items(renting):
