@@ -17,11 +17,17 @@ class RentalContract(Document):
     def autoname(self):
         abbr = frappe.db.get_value("Real Estate Property", self.property_group, "abbr")
         if not abbr:
-            frappe.throw(_(f"Please set the abbreviation of the Real Estate Property {self.property_group}"))
+            frappe.throw(
+                _(
+                    f"Please set the abbreviation of the Real Estate Property {self.property_group}"
+                )
+            )
 
         property_no = frappe.db.get_value("Property", self.property, "property_no")
         if not property_no:
-            frappe.throw(_(f"Please set the property no of the Property {self.property}"))
+            frappe.throw(
+                _(f"Please set the property no of the Property {self.property}")
+            )
 
         self.name = make_autoname("-".join([abbr, property_no, ".###"]), "", self)
 
@@ -69,9 +75,13 @@ def _validate_contract_dates(renting):
 
 
 def _validate_property(renting):
-    rental_status = frappe.db.get_value("Property", renting.property, "rental_status")
-    if rental_status == "Rented":
-        frappe.throw(_("Please make choose unoccupied property."))
+    existing_rental_contracts = frappe.get_all(
+        "Rental Contract", filters={"property": renting.property, "status": "Active"}
+    )
+    if existing_rental_contracts:
+        existing_rental_contract = first(existing_rental_contracts)
+        rental_contract_name = existing_rental_contract.get("name")
+        frappe.throw(_(f"Property {renting.property} is rented on Rental Contract {rental_contract_name}"))
 
 
 def _updated_start_invoice_date(renting):
@@ -151,11 +161,13 @@ def _generate_invoices_now(renting):
         invoice.update(invoice_data)
         invoice.append("items", items[0])
         invoice.set_missing_values()
-        invoice.remarks = make_description({
-            "posting_date": invoice.posting_date,
-            "property": renting.property,
-            "rental_contract": renting.name
-        })
+        invoice.remarks = make_description(
+            {
+                "posting_date": invoice.posting_date,
+                "property": renting.property,
+                "rental_contract": renting.name,
+            }
+        )
 
         invoice.save()
 
