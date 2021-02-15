@@ -2,7 +2,7 @@ import frappe
 from frappe import _dict
 from frappe.utils.data import today, get_first_day, get_last_day
 from facility_management.helpers import set_invoice_created
-from facility_management.utils.rental_contract import make_description
+from facility_management.utils.rental_contract import make_description, make_item_description
 
 
 # TODO: remove unused codes
@@ -51,16 +51,6 @@ def execute(**kwargs):
                 "pm_rental_contract": parent_rc,
             }
         )
-        invoice.append(
-            "items",
-            {
-                "item_code": rental_item,
-                "rate": amount,
-                "qty": 1.0,
-            },
-        )
-        invoice.set_missing_values()
-
         name = tenant_due.get("name")
         tenant_property = tenant_due.get("property")
         invoice.remarks = make_description({
@@ -68,6 +58,19 @@ def execute(**kwargs):
             "property": tenant_property,
             "rental_contract": name
         })
+        invoice.append(
+            "items",
+            {
+                "item_code": rental_item,
+                "description": make_item_description({
+                    'property': tenant_property,
+                    'posting_date': invoice.invoice_date,
+                }),
+                "rate": amount,
+                "qty": 1.0,
+            },
+        )
+        invoice.set_missing_values()
         invoice.save()
 
         if submit_si:
