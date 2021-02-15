@@ -17,6 +17,6 @@ def make_item_description(data):
             "Rent of",
             get_property_name(data.get("property")),
             "for",
-            data.get("posting_date").strftime("%B, %Y"),
+            data.get("posting_date").strftime("%B %Y"),
         ]
     )
