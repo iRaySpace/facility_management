@@ -8,8 +8,8 @@ from frappe import _, enqueue
 from frappe.model.document import Document
 from frappe.model.naming import make_autoname
 from frappe.utils.data import add_to_date, getdate, nowdate, now_datetime, get_first_day
-from facility_management.helpers import get_status, get_debit_to, set_invoice_created
-from facility_management.utils.rental_contract import make_description
+from facility_management.helpers import get_status
+from facility_management.api.rental_contract import generate_invoices_now
 from toolz import first
 
 
@@ -41,7 +41,7 @@ class RentalContract(Document):
     def on_submit(self):
         _set_property_as_rented(self)
         if self.apply_invoices_now:
-            _generate_invoices_now(self)
+            generate_invoices_now(self)
 
     def on_update_after_submit(self):
         _update_items(self)
@@ -124,57 +124,6 @@ def _generate_items(renting):
 
 def _set_property_as_rented(renting):
     frappe.db.set_value("Property", renting.property, "rental_status", "Rented")
-
-
-def _generate_invoices_now(renting):
-    def make_data(item_data):
-        return {
-            "customer": customer,
-            "due_date": item_data.invoice_date,
-            "posting_date": get_first_day(item_data.invoice_date),
-            "debit_to": debit_to,
-            "set_posting_time": 1,
-            "posting_time": 0,
-            "pm_rental_contract": renting.name,
-            "items": [
-                {"item_code": rental_item, "rate": renting.rental_amount, "qty": 1}
-            ],
-        }
-
-    items = list(
-        filter(
-            lambda x: getdate(x.invoice_date) < getdate(now_datetime()), renting.items
-        )
-    )
-    customer = frappe.db.get_value("Tenant Master", renting.tenant, "customer")
-    rental_item = frappe.db.get_single_value(
-        "Facility Management Settings", "rental_item"
-    )
-    submit_si = frappe.db.get_single_value("Facility Management Settings", "submit_si")
-    debit_to = get_debit_to()
-
-    for item in items:
-        invoice_data = make_data(item)
-        items = invoice_data.pop("items")
-
-        invoice = frappe.new_doc("Sales Invoice")
-        invoice.update(invoice_data)
-        invoice.append("items", items[0])
-        invoice.set_missing_values()
-        invoice.remarks = make_description(
-            {
-                "posting_date": invoice.posting_date,
-                "property": renting.property,
-                "rental_contract": renting.name,
-            }
-        )
-
-        invoice.save()
-
-        if submit_si:
-            invoice.submit()
-
-        set_invoice_created(item.name, invoice.name)
 
 
 def _update_items(renting):
