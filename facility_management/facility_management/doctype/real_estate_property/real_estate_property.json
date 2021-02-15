@@ -72,14 +72,12 @@
   {
    "fieldname": "state",
    "fieldtype": "Data",
-   "label": "State",
-   "reqd": 1
+   "label": "State"
   },
   {
    "fieldname": "zip_code",
    "fieldtype": "Data",
-   "label": "Zip Code",
-   "reqd": 1
+   "label": "Zip Code"
   },
   {
    "fieldname": "country",
@@ -139,7 +137,7 @@
    "options": "REP-.###"
   }
  ],
- "modified": "2021-02-15 14:29:21.688035",
+ "modified": "2021-02-15 17:03:44.613342",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Real Estate Property",
