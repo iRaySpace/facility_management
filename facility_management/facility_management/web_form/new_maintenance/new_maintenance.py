@@ -12,7 +12,7 @@ def _get_properties(tenant):
     properties = frappe.get_all(
         "Rental Contract",
         fields=["property"],
-        filters={"status": "Active", "tenant": tenant}
+        filters={"status": "Active", "tenant": tenant},
     )
     return list(map(lambda x: x.get("property"), properties))
 

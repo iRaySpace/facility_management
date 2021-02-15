@@ -2,7 +2,10 @@ import frappe
 from frappe import _
 from frappe.utils.data import get_first_day, getdate, now_datetime
 from facility_management.helpers import get_debit_to, set_invoice_created
-from facility_management.utils.rental_contract import make_description, make_item_description
+from facility_management.utils.rental_contract import (
+    make_description,
+    make_item_description,
+)
 
 
 @frappe.whitelist()
@@ -17,7 +20,11 @@ def create_invoice(rental, rental_item):
 def _validate_rental_items(rental_items):
     rental_created = list(filter(lambda x: x.is_invoice_created, rental_items))
     if rental_created:
-        frappe.throw(_("Unable to generate an invoice. Rental Item has already invoice been generated."))
+        frappe.throw(
+            _(
+                "Unable to generate an invoice. Rental Item has already invoice been generated."
+            )
+        )
 
 
 def generate_invoices_now(renting, items=None):
@@ -33,10 +40,12 @@ def generate_invoices_now(renting, items=None):
             "items": [
                 {
                     "item_code": rental_item,
-                    "description": make_item_description({
-                        'property': renting.property,
-                        'posting_date': item_data.invoice_date,
-                    }),
+                    "description": make_item_description(
+                        {
+                            "property": renting.property,
+                            "posting_date": item_data.invoice_date,
+                        }
+                    ),
                     "rate": renting.rental_amount,
                     "qty": 1,
                 }
@@ -46,7 +55,8 @@ def generate_invoices_now(renting, items=None):
     if not items:
         items = list(
             filter(
-                lambda x: getdate(x.invoice_date) < getdate(now_datetime()), renting.items
+                lambda x: getdate(x.invoice_date) < getdate(now_datetime()),
+                renting.items,
             )
         )
 
