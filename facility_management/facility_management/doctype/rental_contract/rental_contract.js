@@ -112,7 +112,7 @@ async function _set_status(frm) {
   const statuses = await _get_statuses(invoices);
   created_invoices.forEach((invoice) => {
     const status = statuses[invoice.invoice_ref];
-    invoice.description = `${invoice.description} - ${status}`;
+    invoice.description = `Rent (${status})`;
   });
   frm.refresh_fields();
 }
