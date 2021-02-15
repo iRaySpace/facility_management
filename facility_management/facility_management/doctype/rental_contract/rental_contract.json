@@ -164,6 +164,7 @@
   },
   {
    "allow_on_submit": 1,
+   "description": "Description is dynamically displayed based from the invoice status.",
    "fieldname": "items",
    "fieldtype": "Table",
    "options": "Rental Contract Item"
@@ -219,8 +220,8 @@
   }
  ],
  "is_submittable": 1,
- "modified": "2020-10-21 17:47:37.673917",
- "modified_by": "pangit413@gmail.com",
+ "modified": "2021-02-15 17:32:10.608903",
+ "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Rental Contract",
  "owner": "Administrator",
