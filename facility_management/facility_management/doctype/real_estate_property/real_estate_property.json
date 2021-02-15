@@ -31,12 +31,14 @@
    "fieldname": "property_name",
    "fieldtype": "Data",
    "label": "Property Name",
+   "reqd": 1,
    "unique": 1
   },
   {
    "fieldname": "address_line_1",
    "fieldtype": "Data",
-   "label": "Address Line 1"
+   "label": "Address Line 1",
+   "reqd": 1
   },
   {
    "fieldname": "address_line_2",
@@ -64,23 +66,27 @@
   {
    "fieldname": "city",
    "fieldtype": "Data",
-   "label": "City"
+   "label": "City",
+   "reqd": 1
   },
   {
    "fieldname": "state",
    "fieldtype": "Data",
-   "label": "State"
+   "label": "State",
+   "reqd": 1
   },
   {
    "fieldname": "zip_code",
    "fieldtype": "Data",
-   "label": "Zip Code"
+   "label": "Zip Code",
+   "reqd": 1
   },
   {
    "fieldname": "country",
    "fieldtype": "Link",
    "label": "Country",
-   "options": "Country"
+   "options": "Country",
+   "reqd": 1
   },
   {
    "depends_on": "eval:doc.insured",
@@ -133,7 +139,7 @@
    "options": "REP-.###"
   }
  ],
- "modified": "2020-12-30 16:46:24.972746",
+ "modified": "2021-02-15 14:29:21.688035",
  "modified_by": "Administrator",
  "module": "Facility Management",
  "name": "Real Estate Property",
