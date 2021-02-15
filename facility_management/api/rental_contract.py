@@ -2,7 +2,7 @@ import frappe
 from frappe import _
 from frappe.utils.data import get_first_day, getdate, now_datetime
 from facility_management.helpers import get_debit_to, set_invoice_created
-from facility_management.utils.rental_contract import make_description
+from facility_management.utils.rental_contract import make_description, make_item_description
 
 
 @frappe.whitelist()
@@ -31,7 +31,15 @@ def generate_invoices_now(renting, items=None):
             "posting_time": 0,
             "pm_rental_contract": renting.name,
             "items": [
-                {"item_code": rental_item, "rate": renting.rental_amount, "qty": 1}
+                {
+                    "item_code": rental_item,
+                    "description": make_item_description({
+                        'property': renting.property,
+                        'posting_date': item_data.invoice_date,
+                    }),
+                    "rate": renting.rental_amount,
+                    "qty": 1,
+                }
             ],
         }
 
