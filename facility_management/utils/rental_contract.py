@@ -1,3 +1,4 @@
+from frappe.utils.data import getdate
 from facility_management.api.property import get_property_name
 
 
@@ -17,6 +18,6 @@ def make_item_description(data):
             "Rent of",
             get_property_name(data.get("property")),
             "for",
-            data.get("posting_date").strftime("%B %Y"),
+            getdate(data.get("posting_date")).strftime("%B %Y"),
         ]
     )
