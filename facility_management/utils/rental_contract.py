@@ -15,7 +15,7 @@ def make_description(data):
 def make_item_description(data):
     return " ".join(
         [
-            "Rent of",
+            "Rent (VAT Exempted) of",
             get_property_name(data.get("property")),
             "for",
             getdate(data.get("posting_date")).strftime("%B %Y"),
