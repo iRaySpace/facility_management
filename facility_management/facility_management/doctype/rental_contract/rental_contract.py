@@ -76,13 +76,19 @@ def _validate_contract_dates(renting):
 
 
 def _validate_property(renting):
+    rental_status = frappe.db.get_value("Property", renting.property, "rental_status")
     existing_rental_contracts = frappe.get_all(
         "Rental Contract", filters={"property": renting.property, "status": "Active"}
     )
-    if existing_rental_contracts:
+    if existing_rental_contracts and rental_status == "Rented":
         existing_rental_contract = first(existing_rental_contracts)
-        rental_contract_name = existing_rental_contract.get("name")
-        frappe.throw(_(f"Property {renting.property} is rented on Rental Contract {rental_contract_name}"))
+        rental_contract_name = f'<strong>{existing_rental_contract.get("name")}</strong>'
+        property_name = f'<strong>{renting.property}</strong>'
+        frappe.throw(
+            _(
+                f"Property {property_name} is rented on Rental Contract {rental_contract_name}"
+            )
+        )
 
 
 def _updated_start_invoice_date(renting):
