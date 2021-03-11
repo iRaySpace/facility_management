@@ -49,6 +49,7 @@ class RentalContract(Document):
     def before_cancel(self):
         _delink_sales_invoices(self)
         _set_property_as_vacant(self)
+        _set_status(self)
 
 
 def _set_status(renting):
