@@ -64,7 +64,7 @@ def execute(**kwargs):
                 "item_code": rental_item,
                 "description": make_item_description({
                     'property': tenant_property,
-                    'posting_date': invoice.invoice_date,
+                    'posting_date': invoice.posting_date,
                 }),
                 "rate": amount,
                 "qty": 1.0,
