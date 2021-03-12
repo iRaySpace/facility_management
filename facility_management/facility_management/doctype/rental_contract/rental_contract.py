@@ -46,11 +46,7 @@ class RentalContract(Document):
     def on_update_after_submit(self):
         _update_items(self)
 
-    def before_save(self):
-        print(self.__dict__)
-
     def before_cancel(self):
-        print(self.__dict__)
         _delink_sales_invoices(self)
         _set_property_as_vacant(self)
         _set_status(self)
