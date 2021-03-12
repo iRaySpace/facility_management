@@ -17,6 +17,25 @@ def create_invoice(rental, rental_item):
     return True
 
 
+@frappe.whitelist()
+def set_cancellation(rental_contract, cancellation_date, reason_for_cancellation):
+    frappe.db.sql(
+        """
+            UPDATE `tabRental Contract`
+            SET
+                cancellation_date=%(cancellation_date)s,
+                reason_for_cancellation=%(reason_for_cancellation)s
+            WHERE name=%(rental_contract)s
+        """,
+        {
+            "cancellation_date": cancellation_date or now_datetime(),
+            "reason_for_cancellation": reason_for_cancellation,
+            "rental_contract": rental_contract,
+        },
+    )
+    frappe.db.commit()
+
+
 def _validate_rental_items(rental_items):
     rental_created = list(filter(lambda x: x.is_invoice_created, rental_items))
     if rental_created:

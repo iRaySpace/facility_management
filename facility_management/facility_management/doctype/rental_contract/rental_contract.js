@@ -19,6 +19,9 @@ frappe.ui.form.on('Rental Contract', {
   contract_start_date: function (frm) {
     _set_start_invoice_date(frm);
   },
+  after_cancel: function (frm) {
+    _set_cancellation(frm);
+  },
 });
 
 
@@ -58,6 +61,7 @@ function _add_payment_entry(frm) {
   }
 }
 
+
 function _add_cancel_btn(frm) {
   if (frm.doc.docstatus === 1) {
     // remove cancel button and add contract disable
@@ -79,15 +83,9 @@ function _add_cancel_btn(frm) {
             },
           ],
           function (values) {
-            if (values.cancellation_date) {
-              frm.set_value('cancellation_date', values.cancellation_date);
-              frm.set_value(
-                'reason_for_cancellation',
-                values.reason_for_cancellation,
-              );
-            } else {
-              frm.savecancel();
-            }
+            frm.__cancellation_date = values.cancellation_date;
+            frm.__reason_for_cancellation = values.reason_for_cancellation;
+            frm.savecancel();
           },
           'Rental Contract Cancel',
         );
@@ -97,10 +95,24 @@ function _add_cancel_btn(frm) {
   }
 }
 
+
 function _set_start_invoice_date(frm) {
   frm.set_value('start_invoice_date', frm.doc.contract_start_date);
 }
 
+
 function _set_items_read_only(frm) {
   frm.set_df_property('items', 'read_only', 1);
+}
+
+
+function _set_cancellation(frm) {
+  frappe.call({
+    method: 'facility_management.api.rental_contract.set_cancellation',
+    args: {
+      rental_contract: frm.doc.name,
+      cancellation_date: frm.__cancellation_date || null,
+      reason_for_cancellation: frm.__reason_for_cancellation || null,
+    },
+  });
 }
