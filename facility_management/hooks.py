@@ -133,6 +133,9 @@ doctype_js = {
 doc_events = {
     "Sales Invoice": {
         "validate": "facility_management.doc_events.sales_invoice.validate",
+    },
+    "Payment Entry": {
+        "on_submit": "facility_management.doc_events.payment_entry.on_submit",
     }
 }
 

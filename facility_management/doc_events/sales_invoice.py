@@ -4,7 +4,7 @@ from toolz import first
 
 def validate(doc, method):
     _set_missing_values(doc)
-    _set_rental_contract_item(doc)
+    set_rental_contract_item(doc)
 
 
 def _set_missing_values(invoice):
@@ -35,7 +35,7 @@ def _set_missing_values(invoice):
             item.cost_center = cost_center
 
 
-def _set_rental_contract_item(doc):
+def set_rental_contract_item(doc):
     rental_contract_items = frappe.get_all(
         "Rental Contract Item",
         filters={"parent": doc.pm_rental_contract, "invoice_date": doc.due_date},
