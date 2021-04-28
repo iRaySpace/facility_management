@@ -3,3 +3,4 @@ facility_management.patches.v0_4.remove_pm_tenant_renting
 facility_management.patches.v0_14.update_rental_contract_item_description
 facility_management.patches.v0_14.update_contract_status_match_docstatus
 facility_management.patches.v0_14.update_si_item_description
+facility_management.patches.v0_14.update_rental_contract_title
