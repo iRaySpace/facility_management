@@ -37,6 +37,7 @@ class RentalContract(Document):
         if not self.items or _updated_start_invoice_date(self):
             self.update({"items": _generate_items(self)})
         _set_status(self)
+        _set_title(self)
 
     def on_submit(self):
         _set_property_as_rented(self)
@@ -68,6 +69,11 @@ def _set_status(renting):
         )
 
     renting.db_set("status", status, update_modified=True)
+
+
+def _set_title(renting):
+    if renting.is_new():
+        renting.title = f"{renting.property} - {renting.tenant}"
 
 
 def _validate_contract_dates(renting):
