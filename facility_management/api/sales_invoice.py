@@ -1,5 +1,6 @@
 import json
 import frappe
+from frappe import _
 
 
 @frappe.whitelist()
@@ -30,3 +31,17 @@ def get_statuses(invoices):
         filters=[["name", "in", invoices]]
     )
     return {x.get("name"): x.get("status") for x in data}
+
+
+@frappe.whitelist()
+def unlink_from_rental_contract(invoice):
+    contract_items = frappe.get_all(
+        "Rental Contract Item",
+        filters={"invoice_ref": invoice}
+    )
+    if not contract_items:
+        frappe.throw(_("There is no linked Rental Contract Item"))
+    contract_item = contract_items[0]
+    frappe.db.set_value("Rental Contract Item", contract_item.get("name"), "invoice_ref", "")
+    frappe.db.set_value("Rental Contract Item", contract_item.get("name"), "is_invoice_created", 0)
+    return True
