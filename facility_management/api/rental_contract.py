@@ -108,3 +108,21 @@ def generate_invoices_now(renting, items=None):
             invoice.submit()
 
         set_invoice_created(item.name, invoice.name)
+
+
+@frappe.whitelist()
+def refresh_invoice_description(rental_contract):
+    items = frappe.get_all(
+        "Rental Contract Item",
+        filters={"parent": rental_contract},
+        fields=["name", "invoice_ref"],
+    )
+    for item in [x for x in items if x.get("invoice_ref")]:
+        status = frappe.db.get_value("Sales Invoice", item.get("invoice_ref"), "status")
+        frappe.db.set_value(
+            "Rental Contract Item",
+            item.get("name"),
+            "description",
+            "Rent {}".format(status),
+        )
+    frappe.msgprint(_("Successfully refreshed the invoices' description"))

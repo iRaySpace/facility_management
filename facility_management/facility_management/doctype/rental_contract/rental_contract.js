@@ -15,6 +15,7 @@ frappe.ui.form.on('Rental Contract', {
     _add_payment_entry(frm);
     _add_cancel_btn(frm);
     _set_items_read_only(frm);
+    _add_refresh_btn(frm);
   },
   contract_start_date: function (frm) {
     _set_start_invoice_date(frm);
@@ -95,6 +96,17 @@ function _add_cancel_btn(frm) {
   }
 }
 
+function _add_refresh_btn(frm) {
+  if (frm.doc.docstatus === 1) {
+    frm.add_custom_button(__("Refresh Invoice Description"), async function () {
+      await frappe.call({
+        method: 'facility_management.api.rental_contract.refresh_invoice_description',
+        args: { rental_contract: frm.doc.name },
+      });
+      frm.reload_doc();
+    });
+  }
+}
 
 function _set_start_invoice_date(frm) {
   frm.set_value('start_invoice_date', frm.doc.contract_start_date);
